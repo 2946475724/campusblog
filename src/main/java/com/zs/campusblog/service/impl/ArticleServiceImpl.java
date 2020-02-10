@@ -27,4 +27,9 @@ public class ArticleServiceImpl extends IServiceImpl<Article> implements Article
     public List<Article> getAllArticle() {
         return articleMapper.getAllArticle();
     }
+
+    @Override
+    public int deleteArticleById(Integer id) {
+        return articleMapper.deleteArticleById(id);
+    }
 }

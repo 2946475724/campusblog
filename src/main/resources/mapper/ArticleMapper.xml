@@ -8,56 +8,60 @@
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="cateName" property="cateName" jdbcType="VARCHAR"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="BIT"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <!--<collection column="name" property="tags" ofType="com.zs.campusblog.entity.Tag">-->
-            <!--<id column="tagId" property="id" jdbcType="INTEGER"/>-->
-            <!--<result column="tagName" property="name" jdbcType="VARCHAR"/>-->
-        <!--</collection>-->
+        <collection column="name" property="tags" ofType="com.zs.campusblog.entity.Tag">
+            <id column="tagId" property="id" jdbcType="INTEGER"/>
+            <result column="tagName" property="name" jdbcType="VARCHAR"/>
+        </collection>
     </resultMap>
-    <!--<resultMap id="BaseResultMap1" type="com.zs.campusblog.entity.Article">-->
-        <!--<id column="id" property="id" jdbcType="INTEGER"/>-->
-        <!--<result column="title" property="title" jdbcType="VARCHAR"/>-->
-        <!--<result column="content" property="content" jdbcType="VARCHAR"/>-->
-        <!--<result column="category_id" property="categoryId" jdbcType="INTEGER"/>-->
-        <!--<result column="user_id" property="userId" jdbcType="INTEGER"/>-->
-        <!--<result column="username" property="username" jdbcType="VARCHAR"/>-->
-        <!--<result column="status" property="status" jdbcType="BIT"/>-->
-        <!--<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>-->
-        <!--<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>-->
-    <!--</resultMap>-->
-    <!--<select id="getArticleById" parameterType="Integer" resultMap="BaseResultMap1">-->
-        <!--SELECT-->
-            <!--a.*, t.`name` as tagName,-->
-            <!--t.`id` AS tagId,-->
-            <!--u.`username`,-->
-            <!--c.`name` as cateName-->
-        <!--FROM-->
-            <!--article a-->
-        <!--LEFT JOIN article_tag at ON a.`id` = at.`article_id`-->
-        <!--LEFT JOIN tag t ON at.`tag_id` = t.`id`-->
-        <!--LEFT JOIN user u ON a.`user_id` = u.`id`-->
-        <!--LEFT JOIN category c ON a.`category_id` = c.`id`-->
-        <!--WHERE-->
-            <!--a.id = #{id}-->
+    <resultMap id="BaseResultMap1" type="com.zs.campusblog.entity.Article">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="getArticleById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+            a.*, t.`name` as tagName,
+            t.`id` AS tagId,
+            u.`username`,
+            c.`name` as cateName
+        FROM
+            article a
+        LEFT JOIN article_tag at ON a.`id` = at.`article_id`
+        LEFT JOIN tag t ON at.`tag_id` = t.`id`
+        LEFT JOIN user u ON a.`user_id` = u.`id`
+        LEFT JOIN category c ON a.`category_id` = c.`id`
+        WHERE
+            a.id = #{id}
+    </select>
+    <select id="getAllArticle" resultMap="BaseResultMap1">
+        SELECT
+            a.*, t.`name` as tagName,
+            t.`id` AS tagId,
+            u.`username`,
+            c.`name` as cateName
+        FROM
+            article a
+        LEFT JOIN article_tag at ON a.`id` = at.`article_id`
+        LEFT JOIN tag t ON at.`tag_id` = t.`id`
+        LEFT JOIN user u ON a.`user_id` = u.`id`
+        LEFT JOIN category c ON a.`category_id` = c.`id`
+    </select>
+    <select id="getArticleList" resultMap="BaseResultMap">
 
-    <!--</select>-->
-    <!--<select id="getAllArticle" resultMap="BaseResultMap1">-->
-        <!--SELECT-->
-            <!--a.*, t.`name` as tagName,-->
-            <!--t.`id` AS tagId,-->
-            <!--u.`username`,-->
-            <!--c.`name` as cateName-->
-        <!--FROM-->
-            <!--article a-->
-        <!--LEFT JOIN article_tag at ON a.`id` = at.`article_id`-->
-        <!--LEFT JOIN tag t ON at.`tag_id` = t.`id`-->
-        <!--LEFT JOIN user u ON a.`user_id` = u.`id`-->
-        <!--LEFT JOIN category c ON a.`category_id` = c.`id`-->
-    <!--</select>-->
-    <!--<select id="getArticleList" resultMap="BaseResultMap">-->
-
-    <!--</select>-->
+    </select>
+    <delete id="deleteArticleById" parameterType="integer">
+        DELETE a,at FROM article as a LEFT JOIN article_tag as at ON a.id = at.article_id WHERE a.id = #{id}
+    </delete>
 </mapper>

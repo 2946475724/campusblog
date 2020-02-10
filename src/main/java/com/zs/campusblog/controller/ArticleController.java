@@ -24,8 +24,9 @@ public class ArticleController {
 
     @ApiOperation(value = "根据文章id获取文章信息")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Article getArticleById(@PathVariable Integer id) {
-        return articleService.getArticleById(id);
+    public ResponseBean getArticleById(@PathVariable Integer id) {
+        Article article = articleService.getArticleById(id);
+        return ResponseBean.ok("获取成功", article);
     }
 
     @ApiOperation(value = "获取所有文章")
@@ -42,13 +43,18 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "根据文章id删除文章")
-    @DeleteMapping(value = "/{id}")
-    public ResponseBean deleteById(@PathVariable Integer id) {
-        int result = articleService.delete(id);
+    @DeleteMapping(value = "/deleteArticleById")
+    public ResponseBean deleteArticleById(@RequestParam(value = "id") Integer id) {
+        int result = articleService.deleteArticleById(id);
         if(result > 0) {
             return ResponseBean.ok("删除成功");
         }else {
             return ResponseBean.error("删除失败");
         }
+    }
+
+    @PostMapping("/batchDeleteArticles")
+    public ResponseBean batchDeleteArticles(@RequestBody Article article) {
+        return ResponseBean.ok("ok");
     }
 }

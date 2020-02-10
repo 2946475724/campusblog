@@ -22,4 +22,11 @@ public interface ArticleService extends IService<Article>{
      * @return
      */
     List<Article> getAllArticle();
+
+    /**
+     * 根据文章id删除文章
+     * @param ids 文章id
+     * @return
+     */
+    int deleteArticleById(Integer id);
 }

@@ -1,27 +1,24 @@
-package com.zs.campusblog.entity;
+package com.zs.campusblog.entity.dto;
 
+import com.zs.campusblog.entity.Tag;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
  * @author zs
- * @date 2020/1/9
+ * @date 2020/2/10
  */
-
 @Data
-public class Article implements Serializable {
+public class ArticleDTO {
     private Integer id;
     private String title;
     private String content;
     private Integer categoryId;
-    private String cateName;
     private Integer userId;
     private Boolean status;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String username;
     private List<Tag> tags;
 }
