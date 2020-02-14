@@ -1,7 +1,8 @@
 package com.zs.campusblog.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zs.campusblog.entity.ResponseBean;
+import com.zs.campusblog.entity.Result;
+import com.zs.campusblog.util.ResultUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class AuthenticationAccessDeniedHandler implements AccessDeniedHandler {
         resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
         resp.setContentType("application/json;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        ResponseBean error = ResponseBean.error("权限不足，请联系管理员！");
+        Result error = ResultUtil.error("权限不足，请联系管理员！");
         out.write(new ObjectMapper().writeValueAsString(error));
         out.flush();
         out.close();

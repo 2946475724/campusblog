@@ -1,7 +1,8 @@
 package com.zs.campusblog.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zs.campusblog.entity.ResponseBean;
+import com.zs.campusblog.entity.Result;
+import com.zs.campusblog.util.ResultUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class UploadController {
 
     @ApiOperation(value = "图片上传")
     @PostMapping("/upload")
-    public ResponseBean upload(HttpServletRequest request, MultipartFile image) {
+    public Result upload(HttpServletRequest request, MultipartFile image) {
         SimpleDateFormat sdf  = new SimpleDateFormat("yyyy/MM/dd");
         String filePath = sdf.format(new Date());
 
@@ -57,9 +58,9 @@ public class UploadController {
             JSONObject object = new JSONObject();
             object.put("url", url);
 
-            return ResponseBean.ok("上传成功！");
+            return ResultUtil.success("上传成功！");
         }catch (IOException e) {
-            return ResponseBean.error("文件上传错误");
+            return ResultUtil.error("文件上传错误");
         }
     }
 }

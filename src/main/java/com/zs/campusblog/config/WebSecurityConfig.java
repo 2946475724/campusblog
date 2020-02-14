@@ -2,8 +2,9 @@ package com.zs.campusblog.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zs.campusblog.common.UserUtil;
-import com.zs.campusblog.entity.ResponseBean;
+import com.zs.campusblog.entity.Result;
 import com.zs.campusblog.service.UserService;
+import com.zs.campusblog.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -95,10 +96,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication auth) throws IOException, ServletException {
                         resp.setContentType("application/json;charset=utf-8");
-                        ResponseBean responseBean = ResponseBean.ok("登录成功！", UserUtil.getCurrentUser());
+                        Result result = ResultUtil.success("登录成功！", UserUtil.getCurrentUser());
                         ObjectMapper om = new ObjectMapper();
                         PrintWriter out = resp.getWriter();
-                        out.write(om.writeValueAsString(responseBean));
+                        out.write(om.writeValueAsString(result));
                         out.flush();
                         out.close();
                     }
@@ -107,24 +108,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse resp, AuthenticationException e) throws IOException, ServletException {
                         resp.setContentType("application/json;charset=utf-8");
-                        ResponseBean responseBean = null;
+                        Result result = null;
                         if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
-                            responseBean = ResponseBean.error("账户名或密码输入错误！");
+                            result = ResultUtil.error("账户名或密码输入错误！");
                         } else if (e instanceof LockedException) {
-                            responseBean = ResponseBean.error("账户被锁定，请联系管理员！");
+                            result = ResultUtil.error("账户被锁定，请联系管理员！");
                         } else if (e instanceof CredentialsExpiredException) {
-                            responseBean = ResponseBean.error("密码过期，请联系管理员！");
+                            result = ResultUtil.error("密码过期，请联系管理员！");
                         } else if (e instanceof AccountExpiredException) {
-                            responseBean = ResponseBean.error("账户过期，请联系管理员！");
+                            result = ResultUtil.error("账户过期，请联系管理员！");
                         } else if (e instanceof DisabledException) {
-                            responseBean = ResponseBean.error("账户被禁用，请联系管理员！");
+                            result = ResultUtil.error("账户被禁用，请联系管理员！");
                         } else {
-                            responseBean = ResponseBean.error("登录失败！");
+                            result = ResultUtil.error("登录失败！");
                         }
                         resp.setStatus(401);
                         ObjectMapper om = new ObjectMapper();
                         PrintWriter out = resp.getWriter();
-                        out.write(om.writeValueAsString(responseBean));
+                        out.write(om.writeValueAsString(result));
                         out.flush();
                         out.close();
                     }
@@ -137,7 +138,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
-                        out.write(new ObjectMapper().writeValueAsString(ResponseBean.ok("注销成功!")));
+                        out.write(new ObjectMapper().writeValueAsString(ResultUtil.success("注销成功!")));
                         out.flush();
                         out.close();
                     }
@@ -151,7 +152,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         resp.setContentType("application/json;charset=utf-8");
                         resp.setStatus(401);
                         PrintWriter out = resp.getWriter();
-                        ResponseBean respBean = ResponseBean.error("访问失败!");
+                        Result respBean = ResultUtil.success("访问失败!");
                         if (authException instanceof InsufficientAuthenticationException) {
                             respBean.setMsg("请求失败，请联系管理员!");
                         }

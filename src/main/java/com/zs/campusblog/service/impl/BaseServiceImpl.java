@@ -1,6 +1,6 @@
 package com.zs.campusblog.service.impl;
 
-import com.zs.campusblog.service.IService;
+import com.zs.campusblog.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2020/1/10
  * 通用Service实现类
  */
-public class IServiceImpl<T> implements IService<T> {
+public class BaseServiceImpl<T> implements BaseService<T> {
     @Autowired
     protected Mapper<T> mapper;
 

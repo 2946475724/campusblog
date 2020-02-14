@@ -2,7 +2,6 @@ package com.zs.campusblog.mapper;
 
 import com.zs.campusblog.entity.Article;
 import tk.mybatis.mapper.common.Mapper;
-
 import java.util.List;
 
 /**
@@ -25,10 +24,22 @@ public interface ArticleMapper extends Mapper<Article> {
     List<Article> getAllArticle();
 
     /**
+     * 获取文章总数
+     * @return
+     */
+    int getArticleCount();
+
+    /**
      * 获取文章列表
      * @return
      */
     List<Article> getArticleList();
+
+    /**
+     * 添加文章
+     * @param article 文章
+     */
+    void addArticle(Article article);
 
     /**
      * 根据文章id删除文章

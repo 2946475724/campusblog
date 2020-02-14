@@ -7,7 +7,7 @@ import java.util.List;
  * @date 2020/1/10
  * 通用Service接口
  */
-public interface IService<T> {
+public interface BaseService<T> {
     T selectByKey(Object key);
 
     List<T> selectAll();

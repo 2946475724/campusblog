@@ -14,5 +14,5 @@ public class Category implements Serializable {
     private Integer id;
     private String name;
     private String description;
-    private Timestamp create_time;
+    private Timestamp createTime;
 }
