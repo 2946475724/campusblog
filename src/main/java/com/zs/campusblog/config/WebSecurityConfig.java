@@ -1,7 +1,7 @@
 package com.zs.campusblog.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zs.campusblog.common.UserUtil;
+import com.zs.campusblog.util.UserUtil;
 import com.zs.campusblog.entity.Result;
 import com.zs.campusblog.service.UserService;
 import com.zs.campusblog.util.ResultUtil;

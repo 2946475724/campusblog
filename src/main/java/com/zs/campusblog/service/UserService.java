@@ -1,7 +1,10 @@
 package com.zs.campusblog.service;
 
+import com.zs.campusblog.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zs
@@ -10,4 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends UserDetailsService {
 
+    /**
+     * 获取所有用户
+     * @return
+     */
+    List<User> getUsers();
 }

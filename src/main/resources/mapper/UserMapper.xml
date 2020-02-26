@@ -21,6 +21,10 @@
                     column="id">
         </collection>
     </resultMap>
+    <!-- 获取所有用户 -->
+    <select id="getUsers" resultType="com.zs.campusblog.entity.User">
+        SELECT * FROM user ORDER BY id DESC
+    </select>
     <select id="getUserByUsername" resultMap="lazyLoadRoles">
         select * from user where username=#{username}
     </select>

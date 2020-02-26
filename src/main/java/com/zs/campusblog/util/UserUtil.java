@@ -1,4 +1,4 @@
-package com.zs.campusblog.common;
+package com.zs.campusblog.util;
 
 import com.zs.campusblog.entity.User;
 import org.springframework.security.core.context.SecurityContextHolder;

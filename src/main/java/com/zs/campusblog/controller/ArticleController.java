@@ -13,9 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author zs
@@ -54,9 +52,6 @@ public class ArticleController {
     @ApiOperation(value = "添加文章")
     @PostMapping(value = "/add")
     public Result<Article> addArticle(ArticleVO articleVO) {
-        Map<Integer, String> map = new HashMap<>();
-        List<Tag> tags = tagService.selectAll();
-        System.out.println(tags);
         Article article = new Article();
         BeanUtils.copyProperties(articleVO, article);
         articleService.addArticle(article);
@@ -82,9 +77,18 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "获取所有文章标签信息")
-    @GetMapping(value = "tags")
+    @GetMapping(value = "/tags")
     public Result<Article> getTagList() {
         List<Tag> tags = tagService.selectAll();
         return ResultUtil.success(tags);
+    }
+
+    @ApiOperation(value = "编辑文章")
+    @PostMapping("/edit")
+    public Result<Article> editArticle(ArticleVO articleVO) {
+        Article article = new Article();
+        BeanUtils.copyProperties(articleVO, article);
+        articleService.updateAll(article);
+        return ResultUtil.success("更新成功", "");
     }
 }

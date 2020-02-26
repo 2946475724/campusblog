@@ -15,6 +15,12 @@ import java.util.List;
 public interface UserMapper extends Mapper<User> {
 
     /**
+     * 获取所有用户
+     * @return
+     */
+    List<User> getUsers();
+
+    /**
      * 根据用户名获取用户
      * @param username 用户名
      * @return

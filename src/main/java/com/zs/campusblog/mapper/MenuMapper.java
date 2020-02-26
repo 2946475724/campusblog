@@ -8,7 +8,7 @@ import java.util.List;
  * @author zs
  * @date 2020/1/4
  */
-public interface MenuMapper {
+public interface MenuMapper{
 
     /**
      * 通过主键进行删除
