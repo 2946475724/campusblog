@@ -1,14 +1,27 @@
 package com.zs.campusblog.service.impl;
 
-import com.zs.campusblog.entity.User;
-import com.zs.campusblog.mapper.UserMapper;
+import com.zs.campusblog.dao.UserRoleRelationDAO;
+import com.zs.campusblog.mbg.mapper.UserMapper;
+import com.zs.campusblog.mbg.model.Permission;
+import com.zs.campusblog.mbg.model.User;
+import com.zs.campusblog.mbg.model.UserExample;
 import com.zs.campusblog.service.UserService;
+import com.zs.campusblog.util.JwtTokenUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,52 +31,70 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
-    UserMapper userMapper;
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private UserRoleRelationDAO userRoleRelationDAO;
 
-    public List<User> getAllUser() {
-        return userMapper.selectAll();
-    }
-
-    public User getUserById(Integer id) {
-        return userMapper.selectByPrimaryKey(id);
-    }
-
-    /**
-     * 根据用户名查询用户的所有信息
-     * @param s 用户名
-     * @return
-     * @throws UsernameNotFoundException
-     */
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userMapper.getUserByUsername(s);
-        if(user == null) {
-            throw new UsernameNotFoundException("用户名不存在");
+    public User getUserByUsername(String username) {
+        UserExample example = new UserExample();
+        example.createCriteria().andUsernameEqualTo(username);
+        List<User> userList = userMapper.selectByExample(example);
+        if (userList != null && userList.size() > 0) {
+            return userList.get(0);
         }
+        return null;
+    }
+
+    @Override
+    public User register(User userParam) {
+        User user = new User();
+        BeanUtils.copyProperties(userParam, user);
+        user.setCreateTime(new Date());
+        user.setStatus(1);
+        //查询是否有相同用户名的用户
+        UserExample example = new UserExample();
+        example.createCriteria().andUsernameEqualTo(user.getUsername());
+        List<User> userList = userMapper.selectByExample(example);
+        if (userList.size() > 0) {
+            return null;
+        }
+        String encodePassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodePassword);
+        userMapper.insert(user);
         return user;
     }
 
-    public int userRegister(String username, String password) {
-        //如果用户名存在，返回错误
-        if(userMapper.getUserByUsername(username) != null) {
-            return -1;
+    @Override
+    public String login(String username, String password) {
+        String token = null;
+        try {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+                throw new BadCredentialsException("密码不正确");
+            }
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            token = jwtTokenUtil.generateToken(userDetails);
+        } catch (AuthenticationException e) {
+            LOGGER.warn("登录异常:{}", e.getMessage());
         }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encode = encoder.encode(password);
-        return userMapper.addUser(username, encode);
-    }
-
-    public int updateUser(User user) {
-        return userMapper.updateByPrimaryKey(user);
-    }
-
-    public int deleteUserById(Integer id) {
-        return userMapper.deleteByPrimaryKey(id);
+        return token;
     }
 
     @Override
-    public List<User> getUsers() {
-        return userMapper.selectAll();
+    public List<Permission> getPermissionList(Integer userId) {
+        return userRoleRelationDAO.getPermissionList(userId);
     }
 }

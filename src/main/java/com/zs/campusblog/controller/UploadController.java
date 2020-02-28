@@ -1,8 +1,7 @@
 package com.zs.campusblog.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zs.campusblog.entity.Result;
-import com.zs.campusblog.util.ResultUtil;
+import com.zs.campusblog.common.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,9 +57,9 @@ public class UploadController {
             JSONObject object = new JSONObject();
             object.put("url", url);
 
-            return ResultUtil.success("上传成功！");
+            return Result.success("上传成功！");
         }catch (IOException e) {
-            return ResultUtil.error("文件上传错误");
+            return Result.failed("文件上传错误");
         }
     }
 }
