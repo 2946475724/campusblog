@@ -2,10 +2,7 @@ package com.zs.campusblog.service.impl;
 
 import com.zs.campusblog.dao.RoleDAO;
 import com.zs.campusblog.mbg.mapper.RoleMapper;
-import com.zs.campusblog.mbg.model.Menu;
-import com.zs.campusblog.mbg.model.Permission;
-import com.zs.campusblog.mbg.model.Resource;
-import com.zs.campusblog.mbg.model.Role;
+import com.zs.campusblog.mbg.model.*;
 import com.zs.campusblog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> list() {
-        return null;
+        return roleMapper.selectByExample(new RoleExample());
     }
 
     @Override

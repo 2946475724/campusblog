@@ -1,5 +1,6 @@
 package com.zs.campusblog.controller;
 
+import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
 import com.zs.campusblog.dto.UserLoginDTO;
 import com.zs.campusblog.mbg.model.Permission;
@@ -70,6 +71,22 @@ public class UserController {
         data.put("menus", roleService.getMenuList(user.getId()));
         data.put("icon", user.getIcon());
         return Result.success(data);
+    }
+
+    @ApiOperation(value = "登出功能")
+    @PostMapping(value = "/logout")
+    public Result logout() {
+        return Result.success(null);
+    }
+
+    @ApiOperation("根据用户名或姓名分页获取用户列表")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<CommonPage<User>> list(@RequestParam(value = "keyword", required = false) String keyword,
+                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<User> adminList = userService.list(keyword, pageSize, pageNum);
+        return Result.success(CommonPage.restPage(adminList));
     }
 
     @ApiOperation("获取用户所有权限（包括+-权限）")

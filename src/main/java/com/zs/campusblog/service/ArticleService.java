@@ -1,46 +1,35 @@
-//package com.zs.campusblog.service;
-//
-//import com.zs.campusblog.entity.Article;
-//import org.apache.ibatis.annotations.Options;
-//
-//import java.util.List;
-//
-///**
-// * @author zs
-// * @date 2020/1/9
-// */
-//public interface ArticleService extends BaseService<Article> {
-//
-//    /**
-//     * 通过id获取文章信息
-//     * @param id 文章id
-//     * @return
-//     */
-//    Article getArticleById(Integer id);
-//
-//    /**
-//     * 获取所有的文章信息
-//     * @return
-//     */
-//    List<Article> getAllArticle();
-//
-//    /**
-//     * 添加文章
-//     * @param article 文章
-//     */
-//    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
-//    int addArticle(Article article);
-//
-//    /**
-//     * 更新文章
-//     * @param article 文章
-//     */
-//    void updateArticleById(Article article);
-//
-//    /**
-//     * 根据文章id删除文章
-//     * @param ids 文章id
-//     * @return
-//     */
-//    int deleteArticleById(Integer id);
-//}
+package com.zs.campusblog.service;
+
+import com.zs.campusblog.dto.ArticleDTO;
+import com.zs.campusblog.dto.ArticleQueryParam;
+import com.zs.campusblog.mbg.model.Article;
+
+import java.util.List;
+
+/**
+ * @author zs
+ * @date 2020/1/9
+ * 文章管理Service
+ */
+public interface ArticleService {
+    /**
+     * 创建文章
+     */
+    int create(ArticleDTO articleDTO);
+
+    /**
+     * 根据文章编号获取更新信息
+     */
+
+
+    /**
+     * 更新文章
+     */
+    int update(Integer id, ArticleDTO articleDTO);
+
+    /**
+     * 分页查询文章
+     */
+    List<Article> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum);
+
+}

@@ -1,10 +1,11 @@
 package com.zs.campusblog.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zs.campusblog.dao.UserRoleRelationDAO;
+import com.zs.campusblog.dto.UpdateUserPasswordDTO;
+import com.zs.campusblog.dto.UserDetail;
 import com.zs.campusblog.mbg.mapper.UserMapper;
-import com.zs.campusblog.mbg.model.Permission;
-import com.zs.campusblog.mbg.model.User;
-import com.zs.campusblog.mbg.model.UserExample;
+import com.zs.campusblog.mbg.model.*;
 import com.zs.campusblog.service.UserService;
 import com.zs.campusblog.util.JwtTokenUtil;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -94,7 +96,69 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String refreshToken(String oldToken) {
+        return null;
+    }
+
+    @Override
+    public User getItem(Integer id) {
+        return null;
+    }
+
+    @Override
+    public List<User> list(String keyword, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(keyword)) {
+            criteria.andUsernameLike("%" + keyword + "%");
+            example.or(example.createCriteria().andNickNameLike("%" + keyword + "%"));
+        }
+        return userMapper.selectByExample(example);
+    }
+
+    @Override
+    public int update(Integer id, User user) {
+        return 0;
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return 0;
+    }
+
+    @Override
+    public int updateRole(Integer userId, List<Integer> roleIds) {
+        return 0;
+    }
+
+    @Override
+    public List<Role> getRoleList(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public List<Resource> getResourceList(Integer userId) {
+        return null;
+    }
+
+    @Override
     public List<Permission> getPermissionList(Integer userId) {
         return userRoleRelationDAO.getPermissionList(userId);
+    }
+
+    @Override
+    public int updatePermission(Integer userId, List<Integer> permissions) {
+        return 0;
+    }
+
+    @Override
+    public int updatePassword(UpdateUserPasswordDTO updateUserPasswordDTO) {
+        return 0;
+    }
+
+    @Override
+    public UserDetail loadUserByUsername(String username) {
+        return null;
     }
 }
