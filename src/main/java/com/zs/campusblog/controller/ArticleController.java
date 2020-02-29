@@ -2,8 +2,8 @@ package com.zs.campusblog.controller;
 
 import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
+import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.dto.ArticleQueryParam;
-import com.zs.campusblog.mbg.model.Article;
 import com.zs.campusblog.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class ArticleController {
 
     @ApiOperation(value = "查询文章")
     @GetMapping(value = "/list")
-    public Result<CommonPage<Article>> getList(ArticleQueryParam articleQueryParam,
+    public Result<CommonPage<ArticleDTO>> getList(ArticleQueryParam articleQueryParam,
                                                @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<Article> articleList = articleService.list(articleQueryParam, pageSize, pageNum);
+        List<ArticleDTO> articleList = articleService.list(articleQueryParam, pageSize, pageNum);
         return Result.success(CommonPage.restPage(articleList));
     }
 

@@ -2,7 +2,6 @@ package com.zs.campusblog.service;
 
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.dto.ArticleQueryParam;
-import com.zs.campusblog.mbg.model.Article;
 
 import java.util.List;
 
@@ -30,6 +29,6 @@ public interface ArticleService {
     /**
      * 分页查询文章
      */
-    List<Article> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum);
+    List<ArticleDTO> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum);
 
 }

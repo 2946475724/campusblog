@@ -1,7 +1,11 @@
 package com.zs.campusblog.dto;
 
 import com.zs.campusblog.mbg.model.Article;
+import com.zs.campusblog.mbg.model.Tag;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author zs
@@ -10,5 +14,8 @@ import lombok.Data;
  */
 @Data
 public class ArticleDTO extends Article {
-
+    @ApiModelProperty("作者")
+    private String username;
+    private String cateName;
+    private List<Tag> tagList;
 }
