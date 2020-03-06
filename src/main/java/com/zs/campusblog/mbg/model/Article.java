@@ -14,9 +14,6 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章封面图")
     private String coverImage;
 
-    @ApiModelProperty(value = "文章内容")
-    private String content;
-
     @ApiModelProperty(value = "分类id")
     private Integer categoryId;
 
@@ -39,13 +36,16 @@ public class Article implements Serializable {
     private Integer comment;
 
     @ApiModelProperty(value = "文章状态，0私密，1公开")
-    private Boolean status;
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
+
+    @ApiModelProperty(value = "文章内容")
+    private String content;
 
     private static final long serialVersionUID = 1L;
 
@@ -71,14 +71,6 @@ public class Article implements Serializable {
 
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public Integer getCategoryId() {
@@ -137,11 +129,11 @@ public class Article implements Serializable {
         this.comment = comment;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -161,6 +153,14 @@ public class Article implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -170,7 +170,6 @@ public class Article implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", title=").append(title);
         sb.append(", coverImage=").append(coverImage);
-        sb.append(", content=").append(content);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", userId=").append(userId);
         sb.append(", deleteStatus=").append(deleteStatus);
@@ -181,6 +180,7 @@ public class Article implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

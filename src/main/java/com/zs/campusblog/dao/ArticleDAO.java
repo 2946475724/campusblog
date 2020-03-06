@@ -1,6 +1,7 @@
 package com.zs.campusblog.dao;
 
 import com.zs.campusblog.dto.ArticleDTO;
+import com.zs.campusblog.dto.ArticleQueryParam;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 public interface ArticleDAO {
 
-    List<ArticleDTO> getArticleList();
+    List<ArticleDTO> getArticleList(ArticleQueryParam articleQueryParam);
 }

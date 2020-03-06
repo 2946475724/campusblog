@@ -2,6 +2,7 @@ package com.zs.campusblog.service;
 
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.dto.ArticleQueryParam;
+import com.zs.campusblog.mbg.model.Article;
 
 import java.util.List;
 
@@ -12,23 +13,23 @@ import java.util.List;
  */
 public interface ArticleService {
     /**
-     * 创建文章
+     * 创建或更新文章
      */
-    int create(ArticleDTO articleDTO);
-
-    /**
-     * 根据文章编号获取更新信息
-     */
-
-
-    /**
-     * 更新文章
-     */
-    int update(Integer id, ArticleDTO articleDTO);
+    int createOrUpdate(Article article);
 
     /**
      * 分页查询文章
      */
     List<ArticleDTO> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum);
+
+    /**
+     * 根据id获取文章
+     */
+    Article getArticleById(Integer id);
+
+    /**
+     * 批量删除文章
+     */
+    int updateDeleteStatus(List<Integer> ids, Integer deleteStatus);
 
 }

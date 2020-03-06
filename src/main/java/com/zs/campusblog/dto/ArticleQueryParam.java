@@ -13,4 +13,8 @@ public class ArticleQueryParam {
     @ApiModelProperty("文章名称模糊关键字")
     private String keyword;
 
+    private String title;
+
+    private String categoryName;
+
 }
