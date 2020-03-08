@@ -107,5 +107,4 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.updateByExampleSelective(article, articleExample);
     }
 
-
 }

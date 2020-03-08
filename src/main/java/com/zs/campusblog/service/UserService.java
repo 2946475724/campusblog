@@ -47,7 +47,7 @@ public interface UserService {
     /**
      * 根据用户id获取用户
      */
-    User getItem(Integer id);
+    User getUserById(Integer id);
 
     /**
      * 根据用户名或昵称分页查询用户

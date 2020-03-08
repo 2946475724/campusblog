@@ -101,8 +101,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getItem(Integer id) {
-        return null;
+    public User getUserById(Integer id) {
+        return userMapper.selectByPrimaryKey(id);
     }
 
     @Override
