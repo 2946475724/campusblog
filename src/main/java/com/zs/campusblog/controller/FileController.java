@@ -1,10 +1,10 @@
 package com.zs.campusblog.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zs.campusblog.common.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,15 +20,16 @@ import java.util.UUID;
  * @date 2020/1/9
  */
 @RestController
-public class UploadController {
+@RequestMapping("/file")
+public class FileController {
 
-    @Value("${campusblog.upload.path}")
+    @Value("${image.upload.path}")
     private String baseFolderPath;
 
     @ApiOperation(value = "图片上传")
-    @PostMapping("/upload")
+    @PostMapping("/uploadImage")
     public Result upload(HttpServletRequest request, MultipartFile image) {
-        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyyMMdd");
         String filePath = sdf.format(new Date());
 
         File baseFolder = new File(baseFolderPath + filePath);
@@ -43,7 +44,7 @@ public class UploadController {
                 .append(":")
                 .append(request.getServerPort())
                 .append(request.getContextPath())
-                .append("/")
+                .append("/images/")
                 .append(filePath);
         String imgName = UUID.randomUUID().toString().replace("_", "") + "_" + image.getOriginalFilename().replaceAll(" ", "");
         System.out.println(imgName);
@@ -54,10 +55,7 @@ public class UploadController {
             url.append("/").append(imgName);
             System.out.println(url);
 
-            JSONObject object = new JSONObject();
-            object.put("url", url);
-
-            return Result.success("上传成功！");
+            return Result.success(url,"上传成功");
         }catch (IOException e) {
             return Result.failed("文件上传错误");
         }
