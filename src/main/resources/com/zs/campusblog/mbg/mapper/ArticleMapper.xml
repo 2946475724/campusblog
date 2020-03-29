@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zs.campusblog.mbg.model.Article">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
     <result column="cover_image" jdbcType="VARCHAR" property="coverImage" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
@@ -18,6 +19,7 @@
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zs.campusblog.mbg.model.Article">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,11 +80,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, cover_image, category_id, user_id, delete_status, tags, views, likes, 
-    comment, status, create_time, update_time
+    id, title, summary, cover_image, category_id, user_id, delete_status, tags, views, 
+    likes, comment, status, create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
-    content
+    content, content_html
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.zs.campusblog.mbg.model.ArticleExample" resultMap="ResultMapWithBLOBs">
     select
@@ -136,16 +138,18 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into article (title, cover_image, category_id, 
-      user_id, delete_status, tags, 
-      views, likes, comment, 
-      status, create_time, update_time, 
-      content)
-    values (#{title,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER}, #{deleteStatus,jdbcType=INTEGER}, #{tags,jdbcType=VARCHAR}, 
-      #{views,jdbcType=INTEGER}, #{likes,jdbcType=INTEGER}, #{comment,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into article (title, summary, cover_image, 
+      category_id, user_id, delete_status, 
+      tags, views, likes, 
+      comment, status, create_time, 
+      update_time, content, content_html
+      )
+    values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{deleteStatus,jdbcType=INTEGER}, 
+      #{tags,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{likes,jdbcType=INTEGER}, 
+      #{comment,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.Article">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -155,6 +159,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="title != null">
         title,
+      </if>
+      <if test="summary != null">
+        summary,
       </if>
       <if test="coverImage != null">
         cover_image,
@@ -192,10 +199,16 @@
       <if test="content != null">
         content,
       </if>
+      <if test="contentHtml != null">
+        content_html,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
       </if>
       <if test="coverImage != null">
         #{coverImage,jdbcType=VARCHAR},
@@ -233,6 +246,9 @@
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="contentHtml != null">
+        #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zs.campusblog.mbg.model.ArticleExample" resultType="java.lang.Long">
@@ -249,6 +265,9 @@
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null">
+        summary = #{record.summary,jdbcType=VARCHAR},
       </if>
       <if test="record.coverImage != null">
         cover_image = #{record.coverImage,jdbcType=VARCHAR},
@@ -286,6 +305,9 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="record.contentHtml != null">
+        content_html = #{record.contentHtml,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -295,6 +317,7 @@
     update article
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
       cover_image = #{record.coverImage,jdbcType=VARCHAR},
       category_id = #{record.categoryId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
@@ -306,7 +329,8 @@
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      content_html = #{record.contentHtml,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -315,6 +339,7 @@
     update article
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
       cover_image = #{record.coverImage,jdbcType=VARCHAR},
       category_id = #{record.categoryId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
@@ -335,6 +360,9 @@
     <set>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
       </if>
       <if test="coverImage != null">
         cover_image = #{coverImage,jdbcType=VARCHAR},
@@ -372,12 +400,16 @@
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="contentHtml != null">
+        content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zs.campusblog.mbg.model.Article">
     update article
     set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
       cover_image = #{coverImage,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
@@ -389,12 +421,14 @@
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR},
+      content_html = #{contentHtml,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.campusblog.mbg.model.Article">
     update article
     set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
       cover_image = #{coverImage,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},

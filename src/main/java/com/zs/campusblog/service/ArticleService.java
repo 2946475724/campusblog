@@ -23,6 +23,11 @@ public interface ArticleService {
     List<ArticleDTO> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum);
 
     /**
+     * 根据浏览量获取获取热门文章
+     */
+    List<Article> getHotArticle();
+
+    /**
      * 根据id获取文章
      */
     Article getArticleById(Integer id);

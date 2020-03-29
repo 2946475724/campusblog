@@ -1,8 +1,8 @@
 package com.zs.campusblog.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.zs.campusblog.mbg.mapper.TagMapper;
 import com.zs.campusblog.mbg.model.Tag;
+import com.zs.campusblog.mbg.model.TagExample;
 import com.zs.campusblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,8 @@ public class TagServiceImpl implements TagService {
     private TagMapper tagMapper;
 
     @Override
-    public List<Tag> list(Tag tag, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum, pageSize);
-
-        return null;
+    public List<Tag> getTagList() {
+        TagExample tagExample = new TagExample();
+        return tagMapper.selectByExample(tagExample);
     }
 }

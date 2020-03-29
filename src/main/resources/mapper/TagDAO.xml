@@ -13,6 +13,8 @@
         select * from tag where name = #{name, jdbcType=VARCHAR}
     </select>
 
+
+
     <insert id="batchInsertTag" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into tag(name,create_time) values
         <foreach collection="list" item="item" separator=",">

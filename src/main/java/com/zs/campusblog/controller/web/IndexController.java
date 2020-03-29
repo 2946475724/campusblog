@@ -5,6 +5,7 @@ import com.zs.campusblog.common.Result;
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.dto.ArticleQueryParam;
 import com.zs.campusblog.mbg.model.Article;
+import com.zs.campusblog.mbg.model.Tag;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.CategoryService;
 import com.zs.campusblog.service.TagService;
@@ -46,5 +47,18 @@ public class IndexController {
         return Result.success(article);
     }
 
+    @ApiOperation(value = "获取热门文章")
+    @GetMapping(value = "/getHotArticle")
+    public Result getHotArticle() {
+        List<Article> hotArticles = articleService.getHotArticle();
+        return Result.success(hotArticles);
+    }
+
+    @ApiOperation(value = "获取标签列表")
+    @GetMapping(value = "/getTagList")
+    public Result getTagList() {
+        List<Tag> tagList = tagService.getTagList();
+        return Result.success(tagList);
+    }
 
 }

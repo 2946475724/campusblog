@@ -11,6 +11,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章标题")
     private String title;
 
+    @ApiModelProperty(value = "文章摘要")
+    private String summary;
+
     @ApiModelProperty(value = "文章封面图")
     private String coverImage;
 
@@ -47,6 +50,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章内容")
     private String content;
 
+    @ApiModelProperty(value = "文章内容HTML")
+    private String contentHtml;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -63,6 +69,14 @@ public class Article implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getCoverImage() {
@@ -161,6 +175,14 @@ public class Article implements Serializable {
         this.content = content;
     }
 
+    public String getContentHtml() {
+        return contentHtml;
+    }
+
+    public void setContentHtml(String contentHtml) {
+        this.contentHtml = contentHtml;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -169,6 +191,7 @@ public class Article implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", title=").append(title);
+        sb.append(", summary=").append(summary);
         sb.append(", coverImage=").append(coverImage);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", userId=").append(userId);
@@ -181,6 +204,7 @@ public class Article implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", content=").append(content);
+        sb.append(", contentHtml=").append(contentHtml);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

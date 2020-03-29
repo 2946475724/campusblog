@@ -17,15 +17,11 @@ import java.util.List;
 public interface UserService {
     /**
      * 根据用户名获取用户
-     * @param username
-     * @return
      */
     User getUserByUsername(String username);
 
     /**
      * 注册
-     * @param user
-     * @return
      */
     User register(User user);
 
@@ -40,7 +36,6 @@ public interface UserService {
     /**
      * 刷新token的功能
      * @param oldToken 旧的token
-     * @return
      */
     String refreshToken(String oldToken);
 
@@ -55,7 +50,8 @@ public interface UserService {
     List<User> list(String keyword, Integer pageSize, Integer pageNum);
 
     /**
-     * 修改指定用户
+     * 修改指定用户信息
+     *
      */
     int update(Integer id, User user);
 

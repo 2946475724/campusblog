@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 /**
  * @author zs
  * @date 2020/2/28
+ * 修改用户名密码参数
  */
 @Data
 public class UpdateUserPasswordDTO {

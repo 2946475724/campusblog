@@ -1,5 +1,7 @@
 package com.zs.campusblog.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.zs.campusblog.dao.UserRoleRelationDAO;
 import com.zs.campusblog.dto.UpdateUserPasswordDTO;
@@ -119,12 +121,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(Integer id, User user) {
-        return 0;
+        user.setId(id);
+        User rawUser = userMapper.selectByPrimaryKey(id);
+        if (rawUser.getPassword().equals(user.getPassword())) {
+            //与原加密密码相同的不需要修改
+            user.setPassword(null);
+        } else {
+            //与原加密密码不同的需要加密修改
+            if (user.getPassword().isEmpty()) {
+                user.setPassword(null);
+            } else {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+        }
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
     public int delete(Integer id) {
-        return 0;
+        return userMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -154,7 +169,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updatePassword(UpdateUserPasswordDTO updateUserPasswordDTO) {
-        return 0;
+        if (StrUtil.isEmpty(updateUserPasswordDTO.getUsername())
+                || StrUtil.isEmpty(updateUserPasswordDTO.getOldPassword())
+                || StrUtil.isEmpty(updateUserPasswordDTO.getNewPassword())) {
+            return -1;
+        }
+        UserExample example = new UserExample();
+        example.createCriteria().andUsernameEqualTo(updateUserPasswordDTO.getUsername());
+        List<User> userList = userMapper.selectByExample(example);
+        if (CollUtil.isEmpty(userList)) {
+            return -2;
+        }
+        User user = userList.get(0);
+        if (!passwordEncoder.matches(updateUserPasswordDTO.getOldPassword(), user.getPassword())) {
+            return -3;
+        }
+        user.setPassword(passwordEncoder.encode(updateUserPasswordDTO.getNewPassword()));
+        userMapper.updateByPrimaryKey(user);
+        return 1;
     }
 
     @Override

@@ -83,8 +83,8 @@ public class UserController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Result<CommonPage<User>> list(@RequestParam(value = "keyword", required = false) String keyword,
-                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+                                         @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<User> adminList = userService.list(keyword, pageSize, pageNum);
         return Result.success(CommonPage.restPage(adminList));
     }

@@ -49,6 +49,16 @@ public class WebUserController {
         return Result.success(map);
     }
 
+    @ApiOperation(value = "用户注册")
+    @PostMapping(value = "/register")
+    public Result<User> register(@RequestBody User userParam, BindingResult result) {
+        User user = userService.register(userParam);
+        if (user == null) {
+            Result.failed();
+        }
+        return Result.success(user);
+    }
+
     @ApiOperation(value = "登出功能")
     @PostMapping(value = "/logout")
     public Result logout() {

@@ -10,6 +10,7 @@ import com.zs.campusblog.service.CategoryService;
 import com.zs.campusblog.service.TagService;
 import com.zs.campusblog.vo.ArticleVO;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import java.util.List;
  * @date 2020/1/9
  * 文章管理Controller
  */
+@Slf4j
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
@@ -35,8 +37,8 @@ public class ArticleController {
     @ApiOperation(value = "查询文章")
     @GetMapping(value = "/list")
     public Result<CommonPage<ArticleDTO>> getList(ArticleQueryParam articleQueryParam,
-                                               @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                               @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+                                                  @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<ArticleDTO> articleList = articleService.list(articleQueryParam, pageSize, pageNum);
         CommonPage commonPage = new CommonPage<ArticleDTO>();
         return Result.success(CommonPage.restPage(articleList));

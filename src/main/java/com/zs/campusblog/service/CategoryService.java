@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface CategoryService {
     /**
-     * 分页查询文章
+     * 获取所有分类信息
      */
-    List<Category> list(Category category, Integer pageSize, Integer pageNum);
+    List<Category> getCategoryList();
 }

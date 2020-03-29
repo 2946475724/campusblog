@@ -93,6 +93,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> getHotArticle() {
+        return articleDAO.getHotArticle();
+    }
+
+    @Override
     public Article getArticleById(Integer id) {
         Article article = articleMapper.selectByPrimaryKey(id);
         return article;

@@ -1,6 +1,7 @@
 package com.zs.campusblog.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
  * @date 2020/2/27
  * 用户登录参数
  */
+@Data
 public class UserLoginDTO {
     @ApiModelProperty(value = "用户名", required = true)
     @NotEmpty(message = "用户名不能为空")

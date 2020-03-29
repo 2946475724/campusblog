@@ -2,9 +2,8 @@ package com.zs.campusblog.mbg.mapper;
 
 import com.zs.campusblog.mbg.model.Comment;
 import com.zs.campusblog.mbg.model.CommentExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CommentMapper {
     long countByExample(CommentExample example);

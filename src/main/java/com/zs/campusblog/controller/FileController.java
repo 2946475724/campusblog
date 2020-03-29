@@ -18,6 +18,7 @@ import java.util.UUID;
 /**
  * @author zs
  * @date 2020/1/9
+ * 文件上传下载接口
  */
 @RestController
 @RequestMapping("/file")
@@ -29,11 +30,11 @@ public class FileController {
     @ApiOperation(value = "图片上传")
     @PostMapping("/uploadImage")
     public Result upload(HttpServletRequest request, MultipartFile image) {
-        SimpleDateFormat sdf  = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String filePath = sdf.format(new Date());
 
         File baseFolder = new File(baseFolderPath + filePath);
-        if(!baseFolder.exists()) {
+        if (!baseFolder.exists()) {
             baseFolder.mkdirs();
         }
 
@@ -46,6 +47,7 @@ public class FileController {
                 .append(request.getContextPath())
                 .append("/images/")
                 .append(filePath);
+        System.out.println(image);
         String imgName = UUID.randomUUID().toString().replace("_", "") + "_" + image.getOriginalFilename().replaceAll(" ", "");
         System.out.println(imgName);
         try {
@@ -55,8 +57,8 @@ public class FileController {
             url.append("/").append(imgName);
             System.out.println(url);
 
-            return Result.success(url,"上传成功");
-        }catch (IOException e) {
+            return Result.success(url, "上传成功");
+        } catch (IOException e) {
             return Result.failed("文件上传错误");
         }
     }

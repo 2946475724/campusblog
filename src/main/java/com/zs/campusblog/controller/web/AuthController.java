@@ -33,7 +33,6 @@ public class AuthController {
         String username = jwtTokenUtil.getUserNameFromToken(accessToken);
         if (username != null) {
             User userInfo = userService.getUserByUsername(username);
-            log.info("打印获取的用户信息===>" + userInfo);
             if (jwtTokenUtil.validateToken(accessToken, userInfo)) {
                 return Result.success(userInfo);
             }

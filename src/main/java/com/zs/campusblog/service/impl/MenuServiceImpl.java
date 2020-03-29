@@ -60,7 +60,7 @@ public class MenuServiceImpl implements MenuService {
         List<MenuNode> result = menuList.stream()
                 .filter(menu -> menu.getParentId().equals(0))
                 .map(menu -> covertMenuNode(menu, menuList)).collect(Collectors.toList());
-        System.out.println("========>"+result);
+        System.out.println("========>" + result);
         return result;
     }
 
@@ -72,6 +72,7 @@ public class MenuServiceImpl implements MenuService {
 
     /**
      * 将Menu转化为MenuNode并设置children属性
+     *
      * @return
      */
     private MenuNode covertMenuNode(Menu menu, List<Menu> menuList) {

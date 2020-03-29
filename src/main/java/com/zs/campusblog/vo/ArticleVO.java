@@ -18,7 +18,11 @@ public class ArticleVO {
     @NotBlank(message = "文章内容不能为空")
     private String content;
 
+    private String contentHtml;
+
     private String coverImage;
+
+    private String summary;
 
     private Integer categoryId;
 

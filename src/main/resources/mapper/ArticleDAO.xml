@@ -42,4 +42,8 @@
         ORDER BY a.create_time DESC
     </select>
 
+    <select id="getHotArticle" resultMap="BaseResultMap">
+        SELECT * from article ORDER BY views DESC limit 0,6
+    </select>
+
 </mapper>

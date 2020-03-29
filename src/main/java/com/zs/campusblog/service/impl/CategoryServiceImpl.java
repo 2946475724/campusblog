@@ -1,5 +1,6 @@
 package com.zs.campusblog.service.impl;
 
+import com.zs.campusblog.dao.CategoryDAO;
 import com.zs.campusblog.mbg.mapper.CategoryMapper;
 import com.zs.campusblog.mbg.model.Category;
 import com.zs.campusblog.service.CategoryService;
@@ -17,9 +18,11 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Autowired
     CategoryMapper categoryMapper;
+    @Autowired
+    CategoryDAO categoryDAO;
 
     @Override
-    public List<Category> list(Category category, Integer pageSize, Integer pageNum) {
-        return null;
+    public List<Category> getCategoryList() {
+        return categoryDAO.getCategoryList();
     }
 }

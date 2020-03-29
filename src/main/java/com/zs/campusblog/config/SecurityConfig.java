@@ -29,12 +29,12 @@ import java.util.List;
 /**
  * @author zs
  * @date 2019/12/29
- * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
+ * SpringSecurity配置的扩展，支持自定义白名单资源路径和查询用户逻辑
  */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserService userService;
@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
-                .antMatchers("/user/login", "/user/register", "/api/**", "/auth/**", "/file/**")// 对登录注册要允许匿名访问
+                .antMatchers("/user/login", "/user/register", "/api/**", "/auth/**")// 对登录注册要允许匿名访问
                 .permitAll()
                 .antMatchers("/esProduct/**","/member/readHistory/**","/order/**","/aliyun/oss/**","/sso/**")// 测试时放开
                 .permitAll()
@@ -113,11 +113,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationTokenFilter();
     }
 
-    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-
 }

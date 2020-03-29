@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface TagService {
     /**
-     * 分页查询文章
+     * 获取所有标签
      */
-    List<Tag> list(Tag tag, Integer pageSize, Integer pageNum);
+    List<Tag> getTagList();
 }
