@@ -53,7 +53,7 @@ public interface UserService {
      * 修改指定用户信息
      *
      */
-    int update(Integer id, User user);
+    int update(User user);
 
     /**
      * 删除指定用户

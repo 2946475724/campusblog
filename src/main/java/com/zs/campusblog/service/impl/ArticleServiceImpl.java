@@ -98,9 +98,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article getArticleById(Integer id) {
-        Article article = articleMapper.selectByPrimaryKey(id);
+    public ArticleDTO getArticleById(Integer id) {
+        ArticleDTO article = articleDAO.getArticleById(id);
         return article;
+    }
+
+    @Override
+    public List<ArticleDTO> getArticlesByUserId(Integer id) {
+        return articleDAO.getArticlesByUserId(id);
+    }
+
+    @Override
+    public List<ArticleDTO> getArticlesByCategoryId(Integer id) {
+        return articleDAO.getArticlesByCategoryId(id);
     }
 
     @Override
@@ -111,5 +121,6 @@ public class ArticleServiceImpl implements ArticleService {
         articleExample.createCriteria().andIdIn(ids);
         return articleMapper.updateByExampleSelective(article, articleExample);
     }
+
 
 }

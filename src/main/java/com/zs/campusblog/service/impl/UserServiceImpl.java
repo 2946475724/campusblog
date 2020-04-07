@@ -120,20 +120,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int update(Integer id, User user) {
-        user.setId(id);
-        User rawUser = userMapper.selectByPrimaryKey(id);
-        if (rawUser.getPassword().equals(user.getPassword())) {
-            //与原加密密码相同的不需要修改
-            user.setPassword(null);
-        } else {
-            //与原加密密码不同的需要加密修改
-            if (user.getPassword().isEmpty()) {
-                user.setPassword(null);
-            } else {
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-        }
+    public int update(User user) {
+//        user.setId(id);
+//        User rawUser = userMapper.selectByPrimaryKey(id);
+//        if (rawUser.getPassword().equals(user.getPassword())) {
+//            //与原加密密码相同的不需要修改
+//            user.setPassword(null);
+//        } else {
+//            //与原加密密码不同的需要加密修改
+//            if (user.getPassword().isEmpty()) {
+//                user.setPassword(null);
+//            } else {
+//                user.setPassword(passwordEncoder.encode(user.getPassword()));
+//            }
+//        }
         return userMapper.updateByPrimaryKeySelective(user);
     }
 

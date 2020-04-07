@@ -30,11 +30,22 @@ public interface ArticleService {
     /**
      * 根据id获取文章
      */
-    Article getArticleById(Integer id);
+    ArticleDTO getArticleById(Integer id);
+
+    /**
+     * 根据用户id获取文章列表
+     */
+    List<ArticleDTO> getArticlesByUserId(Integer id);
+
+    /**
+     * 根据分类id获取文章列表
+     */
+    List<ArticleDTO> getArticlesByCategoryId(Integer id);
 
     /**
      * 批量删除文章
      */
     int updateDeleteStatus(List<Integer> ids, Integer deleteStatus);
+
 
 }

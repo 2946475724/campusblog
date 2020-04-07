@@ -8,12 +8,34 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
+    
+    <resultMap id="TagResultMap" type="com.zs.campusblog.dto.TagDTO">
+        <id column="tagId" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <collection property="articles" javaType="ArrayList" ofType="com.zs.campusblog.dto.ArticleDTO">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="title" property="title" jdbcType="VARCHAR"/>
+            <result column="summary" property="summary" jdbcType="VARCHAR"/>
+            <result column="content" property="content" jdbcType="VARCHAR"/>
+            <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+            <result column="cover_image" property="coverImage" jdbcType="VARCHAR"/>
+            <result column="user_id" property="userId" jdbcType="INTEGER"/>
+            <result column="tags" property="tags" jdbcType="VARCHAR"/>
+            <result column="views" property="views" jdbcType="INTEGER"/>
+            <result column="likes" property="likes" jdbcType="INTEGER"/>
+            <result column="comment" property="comment" jdbcType="INTEGER"/>
+            <result column="status" property="status" jdbcType="BIT"/>
+            <result column="delete_status" property="deleteStatus" javaType="INTEGER"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+            <result column="username" property="username" jdbcType="VARCHAR"/>
+            <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
 
     <select id="selectByTagName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from tag where name = #{name, jdbcType=VARCHAR}
     </select>
-
-
 
     <insert id="batchInsertTag" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into tag(name,create_time) values
@@ -21,4 +43,21 @@
             (#{item.name,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP})
         </foreach>
     </insert>
+
+    <select id="getTagById" parameterType="integer" resultMap="TagResultMap">
+        SELECT
+            t.id tagId,
+            t.name,
+            a.*,
+            u.username,
+            u.nick_name
+        FROM
+            tag t
+            LEFT JOIN article_tag AT ON t.id = AT.tag_id
+            LEFT JOIN article a ON AT.article_id = a.id
+            LEFT JOIN USER u ON a.user_id = u.id
+        WHERE
+            t.id = #{id}
+    </select>
+
 </mapper>

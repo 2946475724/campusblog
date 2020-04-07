@@ -24,11 +24,20 @@ public class GlobalCorsConfig {
         //允许跨越发送cookie
         config.setAllowCredentials(true);
         //放行全部原始头信息
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("HEAD");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
         config.addAllowedHeader("*");
         //允许所有请求方法跨域调用
         config.addAllowedMethod("*");
+        //添加映射路径
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
+        //返回新的CorsFilter
         return new CorsFilter(source);
     }
 }

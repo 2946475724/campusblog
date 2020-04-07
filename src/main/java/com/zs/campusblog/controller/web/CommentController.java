@@ -72,7 +72,9 @@ public class CommentController {
         List<User> userList = new ArrayList<>();
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
-        criteria.andIdIn(userIdList);
+        if (!userIdList.isEmpty()) {
+            criteria.andIdIn(userIdList);
+        }
         userList = userMapper.selectByExample(userExample);
 
         Map<Integer, User> userMap = new HashMap<>();

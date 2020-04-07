@@ -13,5 +13,7 @@ import lombok.Data;
 public class ArticleDTO extends Article {
     @ApiModelProperty("作者")
     private String username;
+    private String nickName;
     private String categoryName;
+    private String tagName;
 }

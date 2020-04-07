@@ -39,6 +39,7 @@ public class ArticleController {
     public Result<CommonPage<ArticleDTO>> getList(ArticleQueryParam articleQueryParam,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        System.out.println(articleQueryParam);
         List<ArticleDTO> articleList = articleService.list(articleQueryParam, pageSize, pageNum);
         CommonPage commonPage = new CommonPage<ArticleDTO>();
         return Result.success(CommonPage.restPage(articleList));
@@ -70,8 +71,15 @@ public class ArticleController {
     @ApiOperation(value = "根据id获取文章信息")
     @GetMapping(value = "/{id}")
     public Result getArticleInfoById(@PathVariable Integer id) {
-        Article article = articleService.getArticleById(id);
+        ArticleDTO article = articleService.getArticleById(id);
         return Result.success(article);
+    }
+
+    @ApiOperation("根据用户id获取文章列表")
+    @GetMapping("/user")
+    public Result getArticlesByUserId(@RequestParam(name = "userId") Integer id) {
+        List<ArticleDTO> articles = articleService.getArticlesByUserId(id);
+        return Result.success(articles);
     }
 
     @ApiOperation(value = "批量修改删除状态")

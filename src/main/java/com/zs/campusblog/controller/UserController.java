@@ -2,6 +2,7 @@ package com.zs.campusblog.controller;
 
 import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
+import com.zs.campusblog.component.RedisFollowHelper;
 import com.zs.campusblog.dto.UserLoginDTO;
 import com.zs.campusblog.mbg.model.Permission;
 import com.zs.campusblog.mbg.model.User;
@@ -17,6 +18,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author zs
@@ -33,6 +35,8 @@ public class UserController {
     private String tokenHead;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private RedisFollowHelper redisFollowHelper;
 
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "/register")
@@ -94,6 +98,59 @@ public class UserController {
     public Result<List<Permission>> getPermissionList(@PathVariable Integer userId) {
         List<Permission> permissionList = userService.getPermissionList(userId);
         return Result.success(permissionList);
+    }
+
+
+    @ApiOperation("前台获取用户信息")
+    @GetMapping("/setting/info")
+    public Result getUser(Principal principal) {
+        if (principal == null) {
+            return Result.unauthorized(null);
+        }
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        return Result.success(user);
+    }
+
+    @ApiOperation("更新用户信息")
+    @PostMapping("/setting/update")
+    public Result updateUserInfo(@RequestBody User user) {
+        if (userService.update(user) > 0) {
+            return Result.success(null, "更新用户信息成功");
+        }
+        return Result.success(null, "更新用户信息失败");
+    }
+
+    @ApiOperation("关注用户")
+    @PostMapping("/follow")
+    public Result follow(Integer userId, Integer followingId) {
+        redisFollowHelper.follow(userId, followingId);
+        return Result.success("", "关注成功");
+    }
+
+    @ApiOperation("取消关注")
+    @PostMapping("/unFollow")
+    public Result unFollow(Integer userId, Integer followingId) {
+        redisFollowHelper.unFollow(userId, followingId);
+        return Result.success("", "取消关注成功");
+    }
+
+    @ApiOperation("获取关注用户的id")
+    @PostMapping("/follows")
+    public Result getFollowings(Integer userId) {
+        Set<String> followings = redisFollowHelper.getFollowings(userId);
+        Map<String, Set<String>> map = new HashMap<>();
+        map.put("follows", followings);
+        return Result.success(map);
+    }
+
+    @ApiOperation("获取粉丝列表")
+    @PostMapping("/fans")
+    public Result getFans(Integer followingId) {
+        Set<String> fans = redisFollowHelper.getFans(followingId);
+        Map<String, Set<String>> map = new HashMap<>();
+        map.put("fans", fans);
+        return Result.success(map);
     }
 
 }

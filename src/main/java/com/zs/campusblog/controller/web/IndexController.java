@@ -4,7 +4,9 @@ import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.dto.ArticleQueryParam;
+import com.zs.campusblog.dto.TagDTO;
 import com.zs.campusblog.mbg.model.Article;
+import com.zs.campusblog.mbg.model.Category;
 import com.zs.campusblog.mbg.model.Tag;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.CategoryService;
@@ -60,5 +62,27 @@ public class IndexController {
         List<Tag> tagList = tagService.getTagList();
         return Result.success(tagList);
     }
+
+    @ApiOperation("根据标签id获取标签信息")
+    @GetMapping("/tag")
+    public Result getTagById(@RequestParam(name = "tagId") Integer id) {
+        TagDTO tag = tagService.getTagById(id);
+        return Result.success(tag);
+    }
+
+    @ApiOperation("根据分类id获取分类信息")
+    @GetMapping("/category")
+    public Result getCategoryById(@RequestParam(name = "categoryId") Integer id) {
+        List<ArticleDTO> articleList = articleService.getArticlesByCategoryId(id);
+        return Result.success(articleList);
+    }
+
+    @ApiOperation("获取文章分类列表")
+    @GetMapping("/category/list")
+    public Result getCategoryList() {
+        List<Category> categoryList = categoryService.getCategoryList();
+        return Result.success(categoryList);
+    }
+
 
 }

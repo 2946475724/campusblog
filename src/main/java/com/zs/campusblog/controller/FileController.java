@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -39,14 +41,14 @@ public class FileController {
         }
 
         StringBuffer url = new StringBuffer();
-        url.append(request.getScheme())
-                .append("://")
-                .append(request.getServerName())
-                .append(":")
-                .append(request.getServerPort())
-                .append(request.getContextPath())
-                .append("/images/")
-                .append(filePath);
+//        url.append(request.getScheme())
+//                .append("://")
+//                .append(request.getServerName())
+//                .append(":")
+//                .append(request.getServerPort())
+//                .append(request.getContextPath())
+//                .append("/images/")
+//                .append(filePath);
         System.out.println(image);
         String imgName = UUID.randomUUID().toString().replace("_", "") + "_" + image.getOriginalFilename().replaceAll(" ", "");
         System.out.println(imgName);
@@ -54,10 +56,15 @@ public class FileController {
             File dest = new File(baseFolder, imgName);
             System.out.println(dest);
             image.transferTo(dest);
-            url.append("/").append(imgName);
+            url.append("/images/")
+                    .append(filePath)
+                    .append("/")
+                    .append(imgName);
             System.out.println(url);
 
-            return Result.success(url, "上传成功");
+            Map<String, StringBuffer> urlMap = new HashMap<>();
+            urlMap.put("url", url);
+            return Result.success(urlMap, "上传成功");
         } catch (IOException e) {
             return Result.failed("文件上传错误");
         }

@@ -7,11 +7,13 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="content_html" property="contentHtml" jdbcType="VARCHAR"/>
         <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
         <result column="cover_image" property="coverImage" jdbcType="VARCHAR"/>
         <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="nickName" property="nickName" jdbcType="VARCHAR"/>
         <result column="tags" property="tags" jdbcType="VARCHAR"/>
         <result column="views" property="views" jdbcType="INTEGER"/>
         <result column="likes" property="likes" jdbcType="INTEGER"/>
@@ -24,14 +26,14 @@
 
     <select id="getArticleList" parameterType="com.zs.campusblog.dto.ArticleQueryParam" resultMap="BaseResultMap">
         SELECT
-            a.*,
-            u.`username`,
-            c.`name` as categoryName
+        a.*,
+        u.`username`,
+        c.`name` as categoryName
         FROM
-            article a
+        article a
         LEFT JOIN user u ON a.`user_id` = u.`id`
         LEFT JOIN category c ON a.`category_id` = c.`id`
-        <where> a.delete_status = 0
+        <where>a.delete_status = 0
             <if test="title != null and title != ''">
                 and a.title like CONCAT('%',#{title},'%')
             </if>
@@ -44,6 +46,47 @@
 
     <select id="getHotArticle" resultMap="BaseResultMap">
         SELECT * from article ORDER BY views DESC limit 0,6
+    </select>
+
+    <select id="getArticleById" parameterType="integer" resultMap="BaseResultMap">
+        SELECT
+            a.*,
+            u.username,
+            u.nick_name nickName
+        FROM
+            article a
+            LEFT JOIN USER u ON a.user_id = u.id
+        WHERE
+            a.id = #{id}
+    </select>
+
+    <select id="getArticlesByUserId" parameterType="integer" resultMap="BaseResultMap">
+        SELECT
+            u.id userId,
+            u.username,
+            u.nick_name nickName,
+            a.*
+        FROM
+            USER u
+            LEFT JOIN article a ON u.id = a.user_id
+        WHERE
+            user_id = #{id}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="getArticlesByCategoryId" parameterType="integer" resultMap="BaseResultMap">
+        SELECT
+            a.*,
+            u.username,
+            u.nick_name
+        FROM
+            article a
+            LEFT JOIN USER u ON a.user_id = u.id
+        WHERE
+            category_id = #{categoryId}
+        ORDER BY
+	        a.create_time DESC
     </select>
 
 </mapper>
