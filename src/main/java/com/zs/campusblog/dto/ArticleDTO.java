@@ -16,4 +16,5 @@ public class ArticleDTO extends Article {
     private String nickName;
     private String categoryName;
     private String tagName;
+    private Integer likeStatus;
 }

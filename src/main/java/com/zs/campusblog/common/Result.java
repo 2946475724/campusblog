@@ -46,7 +46,7 @@ public class Result<T> {
      * 失败返回结果
      * @param errorCode 错误码
      */
-    public static <T> Result<T> failed(IErrorCode errorCode) {
+    public static <T> Result<T> failed(ErrorCode errorCode) {
         return new Result<T>(errorCode.getCode(), errorCode.getMsg(), null);
     }
 

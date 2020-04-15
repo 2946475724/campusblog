@@ -32,4 +32,6 @@ public class ArticleVO {
 
     private Integer status;
 
+    private Integer type;
+
 }

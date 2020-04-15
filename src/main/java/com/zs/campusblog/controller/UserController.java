@@ -100,7 +100,6 @@ public class UserController {
         return Result.success(permissionList);
     }
 
-
     @ApiOperation("前台获取用户信息")
     @GetMapping("/setting/info")
     public Result getUser(Principal principal) {

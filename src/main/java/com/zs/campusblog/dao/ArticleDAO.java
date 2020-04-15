@@ -12,6 +12,9 @@ import java.util.List;
  */
 public interface ArticleDAO {
 
+    /**
+     * 获取文章列表
+     */
     List<ArticleDTO> getArticleList(ArticleQueryParam articleQueryParam);
 
     /**
@@ -33,5 +36,20 @@ public interface ArticleDAO {
      * 根据分类id获取文章列表
      */
     List<ArticleDTO> getArticlesByCategoryId(Integer categoryId);
+
+    /**
+     * 更新文章表点赞数+1
+     */
+    int incrementLikes(Integer articleId);
+
+    /**
+     * 更新文章表点赞数-1
+     */
+    int decrementLikes(Integer articleId);
+
+    /**
+     * 删除文章，即更新文章状态
+     */
+    int deleteArticleById(Integer id);
 
 }

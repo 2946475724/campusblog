@@ -6,6 +6,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="summary" jdbcType="VARCHAR" property="summary" />
     <result column="cover_image" jdbcType="VARCHAR" property="coverImage" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
@@ -13,6 +14,7 @@
     <result column="views" jdbcType="INTEGER" property="views" />
     <result column="likes" jdbcType="INTEGER" property="likes" />
     <result column="comment" jdbcType="INTEGER" property="comment" />
+    <result column="level" jdbcType="INTEGER" property="level" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -80,8 +82,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, summary, cover_image, category_id, user_id, delete_status, tags, views, 
-    likes, comment, status, create_time, update_time
+    id, title, summary, cover_image, type, category_id, user_id, delete_status, tags, 
+    views, likes, comment, level, status, create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
     content, content_html
@@ -139,17 +141,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into article (title, summary, cover_image, 
-      category_id, user_id, delete_status, 
-      tags, views, likes, 
-      comment, status, create_time, 
-      update_time, content, content_html
-      )
+      type, category_id, user_id, 
+      delete_status, tags, views, 
+      likes, comment, level, 
+      status, create_time, update_time, 
+      content, content_html)
     values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, 
-      #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{deleteStatus,jdbcType=INTEGER}, 
-      #{tags,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{likes,jdbcType=INTEGER}, 
-      #{comment,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR}
-      )
+      #{type,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{deleteStatus,jdbcType=INTEGER}, #{tags,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, 
+      #{likes,jdbcType=INTEGER}, #{comment,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.Article">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -165,6 +167,9 @@
       </if>
       <if test="coverImage != null">
         cover_image,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="categoryId != null">
         category_id,
@@ -186,6 +191,9 @@
       </if>
       <if test="comment != null">
         comment,
+      </if>
+      <if test="level != null">
+        level,
       </if>
       <if test="status != null">
         status,
@@ -213,6 +221,9 @@
       <if test="coverImage != null">
         #{coverImage,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
       <if test="categoryId != null">
         #{categoryId,jdbcType=INTEGER},
       </if>
@@ -233,6 +244,9 @@
       </if>
       <if test="comment != null">
         #{comment,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -272,6 +286,9 @@
       <if test="record.coverImage != null">
         cover_image = #{record.coverImage,jdbcType=VARCHAR},
       </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
       <if test="record.categoryId != null">
         category_id = #{record.categoryId,jdbcType=INTEGER},
       </if>
@@ -292,6 +309,9 @@
       </if>
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -319,6 +339,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       summary = #{record.summary,jdbcType=VARCHAR},
       cover_image = #{record.coverImage,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
       category_id = #{record.categoryId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       delete_status = #{record.deleteStatus,jdbcType=INTEGER},
@@ -326,6 +347,7 @@
       views = #{record.views,jdbcType=INTEGER},
       likes = #{record.likes,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -341,6 +363,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       summary = #{record.summary,jdbcType=VARCHAR},
       cover_image = #{record.coverImage,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
       category_id = #{record.categoryId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       delete_status = #{record.deleteStatus,jdbcType=INTEGER},
@@ -348,6 +371,7 @@
       views = #{record.views,jdbcType=INTEGER},
       likes = #{record.likes,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -366,6 +390,9 @@
       </if>
       <if test="coverImage != null">
         cover_image = #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="categoryId != null">
         category_id = #{categoryId,jdbcType=INTEGER},
@@ -387,6 +414,9 @@
       </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -411,6 +441,7 @@
     set title = #{title,jdbcType=VARCHAR},
       summary = #{summary,jdbcType=VARCHAR},
       cover_image = #{coverImage,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       delete_status = #{deleteStatus,jdbcType=INTEGER},
@@ -418,6 +449,7 @@
       views = #{views,jdbcType=INTEGER},
       likes = #{likes,jdbcType=INTEGER},
       comment = #{comment,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -430,6 +462,7 @@
     set title = #{title,jdbcType=VARCHAR},
       summary = #{summary,jdbcType=VARCHAR},
       cover_image = #{coverImage,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       delete_status = #{deleteStatus,jdbcType=INTEGER},
@@ -437,6 +470,7 @@
       views = #{views,jdbcType=INTEGER},
       likes = #{likes,jdbcType=INTEGER},
       comment = #{comment,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

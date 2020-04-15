@@ -1,4 +1,4 @@
-package com.zs.campusblog.controller.web;
+package com.zs.campusblog.controller;
 
 import com.zs.campusblog.common.Result;
 import com.zs.campusblog.mbg.model.Category;

@@ -47,5 +47,9 @@ public interface ArticleService {
      */
     int updateDeleteStatus(List<Integer> ids, Integer deleteStatus);
 
+    /**
+     * 通过文章id删除文章
+     */
+    int deleteArticleById(Integer id);
 
 }

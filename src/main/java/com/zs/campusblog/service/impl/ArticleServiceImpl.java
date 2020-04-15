@@ -122,5 +122,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.updateByExampleSelective(article, articleExample);
     }
 
+    @Override
+    public int deleteArticleById(Integer id) {
+        return articleDAO.deleteArticleById(id);
+    }
+
 
 }

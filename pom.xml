@@ -106,6 +106,12 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.6.1</version>
         </dependency>
+        <!-- minio -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>3.0.10</version>
+        </dependency>
         <!-- redis依赖配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

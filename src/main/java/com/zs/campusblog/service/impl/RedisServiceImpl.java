@@ -16,6 +16,11 @@ public class RedisServiceImpl implements RedisService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Override
+    public void saveLiked2Red(Integer articleId, Integer userId) {
+
+    }
+
 
 //    @Override
 //    public void set(String key, String value) {

@@ -17,13 +17,16 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章封面图")
     private String coverImage;
 
+    @ApiModelProperty(value = "文章写作编辑器，0富文本，1Markdown")
+    private Integer type;
+
     @ApiModelProperty(value = "分类id")
     private Integer categoryId;
 
     @ApiModelProperty(value = "用户id")
     private Integer userId;
 
-    @ApiModelProperty(value = "删除状态：0->未删除；1->已删除")
+    @ApiModelProperty(value = "删除状态：0未删除；1已删除")
     private Integer deleteStatus;
 
     @ApiModelProperty(value = "文章标签")
@@ -37,6 +40,9 @@ public class Article implements Serializable {
 
     @ApiModelProperty(value = "评论数")
     private Integer comment;
+
+    @ApiModelProperty(value = "推荐等级，0正常")
+    private Integer level;
 
     @ApiModelProperty(value = "文章状态，0私密，1公开")
     private Integer status;
@@ -85,6 +91,14 @@ public class Article implements Serializable {
 
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getCategoryId() {
@@ -143,6 +157,14 @@ public class Article implements Serializable {
         this.comment = comment;
     }
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -193,6 +215,7 @@ public class Article implements Serializable {
         sb.append(", title=").append(title);
         sb.append(", summary=").append(summary);
         sb.append(", coverImage=").append(coverImage);
+        sb.append(", type=").append(type);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", userId=").append(userId);
         sb.append(", deleteStatus=").append(deleteStatus);
@@ -200,6 +223,7 @@ public class Article implements Serializable {
         sb.append(", views=").append(views);
         sb.append(", likes=").append(likes);
         sb.append(", comment=").append(comment);
+        sb.append(", level=").append(level);
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

@@ -11,7 +11,7 @@ spring:
   #Redis配置
   redis:
     database: 0  #Redis数据库索引（默认为0）
-    host: 127.0.0.1
+    host: 47.101.54.228
     port: 6379
     password:  #Redis服务器连接密码（默认为空）
     jedis:
@@ -45,6 +45,12 @@ pagehelper:
   support-methods-arguments: true
   params: countSql
 
+#日志配置
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    com.zs.campusblog.dao: DEBUG
+
 # 自定义jwt key
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
@@ -65,3 +71,9 @@ aliyun:
     callback: http://campusblog.qicp.vip/ # 文件上传成功后的回调地址
     dir:
       prefix: images/ # 上传文件夹路径前缀
+
+minio:
+  endpoint: http://47.101.54.228:9090 # MinIO服务所在地址
+  bucketName: campusblog # 存储桶名称
+  accessKey: minioadmin # 访问的key
+  secretKey: minioadmin # 访问的秘钥

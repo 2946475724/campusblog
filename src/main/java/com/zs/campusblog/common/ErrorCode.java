@@ -5,7 +5,7 @@ package com.zs.campusblog.common;
  * @date 2020/2/27
  * 封装API的错误码
  */
-public interface IErrorCode {
+public interface ErrorCode {
     Integer getCode();
     String getMsg();
 }

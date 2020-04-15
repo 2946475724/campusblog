@@ -5,7 +5,7 @@ package com.zs.campusblog.common;
  * @date 2020/2/13
  * 枚举常见的API操作码
  */
-public enum ResultCode implements IErrorCode {
+public enum ResultCode implements ErrorCode {
     SUCCESS(200, "操作成功"),
     FAILED(500, "操作失败"),
     VALIDATE_FAILED(404, "参数校验失败"),

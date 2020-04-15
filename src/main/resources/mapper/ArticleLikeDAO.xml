@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.campusblog.dao.ArticleLikeDAO">
+
+    <update id="updateStatus" parameterType="com.zs.campusblog.mbg.model.ArticleLike">
+        update article_like set status = #{status} where user_id = #{userId}
+    </update>
+
+</mapper>
