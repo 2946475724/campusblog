@@ -2,6 +2,8 @@ package com.zs.campusblog.dao;
 
 import com.zs.campusblog.dto.TagDTO;
 import com.zs.campusblog.mbg.model.Tag;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,4 +21,14 @@ public interface TagDAO {
      */
     TagDTO getTagById(Integer id);
 
+    /**
+     * 获取标签列表
+     */
+    List<Tag> getTagList(@Param("keyword") String keyword);
+
+    /**
+     * 获取标签数
+     */
+    @Select("select count(id) as tagCount from tag")
+    int getTagCount();
 }

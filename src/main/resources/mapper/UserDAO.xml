@@ -2,4 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zs.campusblog.dao.UserDAO">
 
+    <select id="getUserList" parameterType="string" resultType="com.zs.campusblog.dto.UserDTO">
+        SELECT
+            u.*,
+            r.role_name roleName,
+            r.id roleId
+        FROM
+            user_role_relation urr
+            LEFT JOIN USER u ON urr.user_id = u.id
+            LEFT JOIN role r ON r.id = urr.role_id
+        WHERE u.delete_status = 1
+        <if test="keyword != null || keword != ''">
+            and username like CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <update id="delete" parameterType="integer">
+        update user set delete_status = 0 where id = #{userId}
+    </update>
+
+    <select id="getUserCount" resultType="integer">
+        select count(id) as userCount from user where delete_status = 1
+    </select>
 </mapper>

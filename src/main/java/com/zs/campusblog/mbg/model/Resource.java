@@ -5,10 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Resource implements Serializable {
+    @ApiModelProperty(value = "唯一主键id")
     private Integer id;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
 
     @ApiModelProperty(value = "资源名称")
     private String name;
@@ -22,6 +20,9 @@ public class Resource implements Serializable {
     @ApiModelProperty(value = "资源分类ID")
     private Integer categoryId;
 
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -30,14 +31,6 @@ public class Resource implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public String getName() {
@@ -72,6 +65,14 @@ public class Resource implements Serializable {
         this.categoryId = categoryId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -79,11 +80,11 @@ public class Resource implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", createTime=").append(createTime);
         sb.append(", name=").append(name);
         sb.append(", url=").append(url);
         sb.append(", description=").append(description);
         sb.append(", categoryId=").append(categoryId);
+        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

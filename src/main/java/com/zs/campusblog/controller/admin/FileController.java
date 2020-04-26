@@ -1,4 +1,4 @@
-package com.zs.campusblog.controller;
+package com.zs.campusblog.controller.admin;
 
 import com.zs.campusblog.common.Result;
 import io.swagger.annotations.ApiOperation;

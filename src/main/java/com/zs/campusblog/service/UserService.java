@@ -1,11 +1,12 @@
 package com.zs.campusblog.service;
 
 import com.zs.campusblog.dto.UpdateUserPasswordDTO;
-import com.zs.campusblog.dto.UserDetail;
+import com.zs.campusblog.dto.UserDTO;
 import com.zs.campusblog.mbg.model.Permission;
 import com.zs.campusblog.mbg.model.Resource;
 import com.zs.campusblog.mbg.model.Role;
 import com.zs.campusblog.mbg.model.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public interface UserService {
     /**
      * 根据用户名或昵称分页查询用户
      */
-    List<User> list(String keyword, Integer pageSize, Integer pageNum);
+    List<UserDTO> list(String keyword, Integer pageSize, Integer pageNum);
 
     /**
      * 修改指定用户信息
@@ -96,7 +97,13 @@ public interface UserService {
 
     /**
      * 获取用户信息
+     * @return
      */
-    UserDetail loadUserByUsername(String username);
+    UserDetails loadUserByUsername(String username);
+
+    /**
+     * 获取用户数量
+     */
+    int getUserCount();
 
 }

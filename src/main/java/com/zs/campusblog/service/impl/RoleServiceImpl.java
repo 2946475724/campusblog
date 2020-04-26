@@ -1,12 +1,14 @@
 package com.zs.campusblog.service.impl;
 
 import com.zs.campusblog.dao.RoleDAO;
+import com.zs.campusblog.dao.UserRoleRelationDAO;
 import com.zs.campusblog.mbg.mapper.RoleMapper;
 import com.zs.campusblog.mbg.model.*;
 import com.zs.campusblog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,21 +21,23 @@ public class RoleServiceImpl implements RoleService {
     RoleMapper roleMapper;
     @Autowired
     private RoleDAO roleDAO;
-
+    @Autowired
+    private UserRoleRelationDAO userRoleRelationDAO;
 
     @Override
-    public int create(Role role) {
-        return 0;
+    public int add(Role role) {
+        role.setCreateTime(new Date());
+        return roleMapper.insertSelective(role);
     }
 
     @Override
-    public int update(Integer id, Role role) {
-        return 0;
+    public int update(Role role) {
+        return roleMapper.updateByPrimaryKeySelective(role);
     }
 
     @Override
-    public int delete(List<Integer> ids) {
-        return 0;
+    public int deleteById(Integer id) {
+        return roleMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -80,4 +84,23 @@ public class RoleServiceImpl implements RoleService {
     public int allocResource(Integer roleId, List<Integer> resourceIds) {
         return 0;
     }
+
+    @Override
+    public List<Role> getRoleByRoleName(String roleName) {
+        RoleExample example = new RoleExample();
+        example.createCriteria().andRoleNameEqualTo(roleName);
+        return roleMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<Role> getRoleListByUserId(Integer userId) {
+        return roleDAO.getRoleListByUserId(userId);
+    }
+
+    @Override
+    public int updateUserRole(Integer roleId, Integer userId) {
+        return userRoleRelationDAO.updateUserRole(roleId, userId);
+    }
+
+
 }

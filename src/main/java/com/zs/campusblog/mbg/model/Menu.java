@@ -10,9 +10,6 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "父级ID")
     private Integer parentId;
 
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
     @ApiModelProperty(value = "菜单名称")
     private String title;
 
@@ -31,6 +28,9 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "前端隐藏")
     private Integer hidden;
 
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -47,14 +47,6 @@ public class Menu implements Serializable {
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public String getTitle() {
@@ -105,6 +97,14 @@ public class Menu implements Serializable {
         this.hidden = hidden;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -113,13 +113,13 @@ public class Menu implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", parentId=").append(parentId);
-        sb.append(", createTime=").append(createTime);
         sb.append(", title=").append(title);
         sb.append(", level=").append(level);
         sb.append(", sort=").append(sort);
         sb.append(", name=").append(name);
         sb.append(", icon=").append(icon);
         sb.append(", hidden=").append(hidden);
+        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

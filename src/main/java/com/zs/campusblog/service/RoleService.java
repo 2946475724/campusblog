@@ -18,17 +18,17 @@ public interface RoleService {
     /**
      * 添加角色
      */
-    int create(Role role);
+    int add(Role role);
 
     /**
      * 修改角色
      */
-    int update(Integer id, Role role);
+    int update(Role role);
 
     /**
      * 批量删除角色
      */
-    int delete(List<Integer> ids);
+    int deleteById(Integer id);
 
     /**
      * 获取指定角色权限
@@ -77,4 +77,19 @@ public interface RoleService {
      */
     @Transactional
     int allocResource(Integer roleId, List<Integer> resourceIds);
+
+    /**
+     * 根据角色名获取角色信息
+     */
+    List<Role> getRoleByRoleName(String roleName);
+
+    /**
+     * 根据用户id获取角色信息
+     */
+    List<Role> getRoleListByUserId(Integer userId);
+
+    /**
+     * 更新用户角色
+     */
+    int updateUserRole(Integer roleId, Integer userId);
 }

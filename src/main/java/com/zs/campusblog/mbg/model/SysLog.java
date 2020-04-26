@@ -10,6 +10,15 @@ public class SysLog implements Serializable {
     @ApiModelProperty(value = "用户名")
     private String username;
 
+    @ApiModelProperty(value = "请求url")
+    private String url;
+
+    @ApiModelProperty(value = "请求方式")
+    private String type;
+
+    @ApiModelProperty(value = "请求类路径")
+    private String classPath;
+
     @ApiModelProperty(value = "用户操作")
     private String operation;
 
@@ -24,6 +33,12 @@ public class SysLog implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
+
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
+
+    @ApiModelProperty(value = "方法请求花费的时间")
+    private Integer spendTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -41,6 +56,30 @@ public class SysLog implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getClassPath() {
+        return classPath;
+    }
+
+    public void setClassPath(String classPath) {
+        this.classPath = classPath;
     }
 
     public String getOperation() {
@@ -83,6 +122,22 @@ public class SysLog implements Serializable {
         this.createTime = createTime;
     }
 
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getSpendTime() {
+        return spendTime;
+    }
+
+    public void setSpendTime(Integer spendTime) {
+        this.spendTime = spendTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -91,11 +146,16 @@ public class SysLog implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", username=").append(username);
+        sb.append(", url=").append(url);
+        sb.append(", type=").append(type);
+        sb.append(", classPath=").append(classPath);
         sb.append(", operation=").append(operation);
         sb.append(", method=").append(method);
         sb.append(", params=").append(params);
         sb.append(", ip=").append(ip);
         sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", spendTime=").append(spendTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

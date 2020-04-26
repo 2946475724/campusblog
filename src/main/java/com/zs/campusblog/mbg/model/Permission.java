@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Permission implements Serializable {
+    @ApiModelProperty(value = "唯一主键id")
     private Integer id;
 
     @ApiModelProperty(value = "父级权限id")

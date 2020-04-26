@@ -3,11 +3,11 @@
 <mapper namespace="com.zs.campusblog.mbg.mapper.ResourceMapper">
   <resultMap id="BaseResultMap" type="com.zs.campusblog.mbg.model.Resource">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, create_time, name, url, description, category_id
+    id, name, url, description, category_id, create_time
   </sql>
   <select id="selectByExample" parameterType="com.zs.campusblog.mbg.model.ResourceExample" resultMap="BaseResultMap">
     select
@@ -104,10 +104,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into resource (create_time, name, url, 
-      description, category_id)
-    values (#{createTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER})
+    insert into resource (name, url, description, 
+      category_id, create_time)
+    values (#{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.Resource">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -115,9 +115,6 @@
     </selectKey>
     insert into resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="createTime != null">
-        create_time,
-      </if>
       <if test="name != null">
         name,
       </if>
@@ -130,11 +127,11 @@
       <if test="categoryId != null">
         category_id,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -146,6 +143,9 @@
       </if>
       <if test="categoryId != null">
         #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -161,9 +161,6 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -176,6 +173,9 @@
       <if test="record.categoryId != null">
         category_id = #{record.categoryId,jdbcType=INTEGER},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -184,11 +184,11 @@
   <update id="updateByExample" parameterType="map">
     update resource
     set id = #{record.id,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       name = #{record.name,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      category_id = #{record.categoryId,jdbcType=INTEGER}
+      category_id = #{record.categoryId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -196,9 +196,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zs.campusblog.mbg.model.Resource">
     update resource
     <set>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -211,16 +208,19 @@
       <if test="categoryId != null">
         category_id = #{categoryId,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.campusblog.mbg.model.Resource">
     update resource
-    set create_time = #{createTime,jdbcType=TIMESTAMP},
-      name = #{name,jdbcType=VARCHAR},
+    set name = #{name,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      category_id = #{categoryId,jdbcType=INTEGER}
+      category_id = #{categoryId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

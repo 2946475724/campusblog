@@ -1,5 +1,6 @@
 package com.zs.campusblog.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,11 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 public class ArticleVO {
+    @ApiModelProperty("文章名称模糊关键字")
+    private String keyword;
+
+    private Integer id;
+
     @NotEmpty(message = "标题不能为空")
     private String title;
 

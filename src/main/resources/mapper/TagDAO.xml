@@ -60,4 +60,14 @@
             t.id = #{id}
     </select>
 
+    <select id="getTagList" parameterType="string" resultType="com.zs.campusblog.mbg.model.Tag">
+        select * from tag
+        <where>
+            <if test="keyword != null || keyword != ''">
+                name like CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+
+    </select>
+
 </mapper>

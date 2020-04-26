@@ -4,12 +4,13 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class RoleMenuRelation implements Serializable {
+    @ApiModelProperty(value = "唯一主键id")
     private Integer id;
 
-    @ApiModelProperty(value = "角色ID")
+    @ApiModelProperty(value = "角色id")
     private Integer roleId;
 
-    @ApiModelProperty(value = "菜单ID")
+    @ApiModelProperty(value = "菜单id")
     private Integer menuId;
 
     private static final long serialVersionUID = 1L;

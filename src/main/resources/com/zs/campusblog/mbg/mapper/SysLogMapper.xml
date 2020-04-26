@@ -4,11 +4,16 @@
   <resultMap id="BaseResultMap" type="com.zs.campusblog.mbg.model.SysLog">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="class_path" jdbcType="VARCHAR" property="classPath" />
     <result column="operation" jdbcType="VARCHAR" property="operation" />
     <result column="method" jdbcType="VARCHAR" property="method" />
     <result column="params" jdbcType="VARCHAR" property="params" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="spend_time" jdbcType="INTEGER" property="spendTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, operation, method, params, ip, create_time
+    id, username, url, type, class_path, operation, method, params, ip, create_time, 
+    update_time, spend_time
   </sql>
   <select id="selectByExample" parameterType="com.zs.campusblog.mbg.model.SysLogExample" resultMap="BaseResultMap">
     select
@@ -105,12 +111,14 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sys_log (username, operation, method, 
-      params, ip, create_time
-      )
-    values (#{username,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
-      #{params,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+    insert into sys_log (username, url, type, 
+      class_path, operation, method, 
+      params, ip, create_time, 
+      update_time, spend_time)
+    values (#{username,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{classPath,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{params,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{spendTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.SysLog">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -120,6 +128,15 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">
         username,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="classPath != null">
+        class_path,
       </if>
       <if test="operation != null">
         operation,
@@ -136,10 +153,25 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="spendTime != null">
+        spend_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="classPath != null">
+        #{classPath,jdbcType=VARCHAR},
       </if>
       <if test="operation != null">
         #{operation,jdbcType=VARCHAR},
@@ -155,6 +187,12 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spendTime != null">
+        #{spendTime,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -173,6 +211,15 @@
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
       </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classPath != null">
+        class_path = #{record.classPath,jdbcType=VARCHAR},
+      </if>
       <if test="record.operation != null">
         operation = #{record.operation,jdbcType=VARCHAR},
       </if>
@@ -188,6 +235,12 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.spendTime != null">
+        spend_time = #{record.spendTime,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -197,11 +250,16 @@
     update sys_log
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      class_path = #{record.classPath,jdbcType=VARCHAR},
       operation = #{record.operation,jdbcType=VARCHAR},
       method = #{record.method,jdbcType=VARCHAR},
       params = #{record.params,jdbcType=VARCHAR},
       ip = #{record.ip,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      spend_time = #{record.spendTime,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,6 +269,15 @@
     <set>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="classPath != null">
+        class_path = #{classPath,jdbcType=VARCHAR},
       </if>
       <if test="operation != null">
         operation = #{operation,jdbcType=VARCHAR},
@@ -227,17 +294,28 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spendTime != null">
+        spend_time = #{spendTime,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.campusblog.mbg.model.SysLog">
     update sys_log
     set username = #{username,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      class_path = #{classPath,jdbcType=VARCHAR},
       operation = #{operation,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR},
       params = #{params,jdbcType=VARCHAR},
       ip = #{ip,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      spend_time = #{spendTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -20,8 +20,8 @@ public class Link implements Serializable {
     @ApiModelProperty(value = "点击数")
     private Integer clickCount;
 
-    @ApiModelProperty(value = "状态")
-    private Boolean status;
+    @ApiModelProperty(value = "删除状态，0删除，1未删除")
+    private Integer deleteStatus;
 
     @ApiModelProperty(value = "排序字段，越大越靠前")
     private Integer sort;
@@ -74,12 +74,12 @@ public class Link implements Serializable {
         this.clickCount = clickCount;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Integer getDeleteStatus() {
+        return deleteStatus;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setDeleteStatus(Integer deleteStatus) {
+        this.deleteStatus = deleteStatus;
     }
 
     public Integer getSort() {
@@ -117,7 +117,7 @@ public class Link implements Serializable {
         sb.append(", summary=").append(summary);
         sb.append(", url=").append(url);
         sb.append(", clickCount=").append(clickCount);
-        sb.append(", status=").append(status);
+        sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", sort=").append(sort);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

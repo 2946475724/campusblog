@@ -1,4 +1,4 @@
-package com.zs.campusblog.component;
+package com.zs.campusblog.common.aop;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;

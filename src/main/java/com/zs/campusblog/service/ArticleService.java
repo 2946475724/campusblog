@@ -1,10 +1,11 @@
 package com.zs.campusblog.service;
 
 import com.zs.campusblog.dto.ArticleDTO;
-import com.zs.campusblog.dto.ArticleQueryParam;
 import com.zs.campusblog.mbg.model.Article;
+import com.zs.campusblog.vo.ArticleVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zs
@@ -20,7 +21,7 @@ public interface ArticleService {
     /**
      * 分页查询文章
      */
-    List<ArticleDTO> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum);
+    List<ArticleDTO> list(ArticleVO articleVO, Integer pageSize, Integer pageNum);
 
     /**
      * 根据浏览量获取获取热门文章
@@ -51,5 +52,15 @@ public interface ArticleService {
      * 通过文章id删除文章
      */
     int deleteArticleById(Integer id);
+
+    /**
+     * 获取当前的文章数
+     */
+    int getArticleCount();
+
+    /**
+     * 获取一年内文章的贡献数
+     */
+    Map<String, Object> getArticleContributeCount();
 
 }

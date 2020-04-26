@@ -3,7 +3,6 @@ package com.zs.campusblog.controller.web;
 import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
 import com.zs.campusblog.dto.ArticleDTO;
-import com.zs.campusblog.dto.ArticleQueryParam;
 import com.zs.campusblog.dto.TagDTO;
 import com.zs.campusblog.mbg.model.Article;
 import com.zs.campusblog.mbg.model.Category;
@@ -11,6 +10,7 @@ import com.zs.campusblog.mbg.model.Tag;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.CategoryService;
 import com.zs.campusblog.service.TagService;
+import com.zs.campusblog.vo.ArticleVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +34,10 @@ public class IndexController {
 
     @ApiOperation(value = "查询文章")
     @GetMapping(value = "/list")
-    public Result<CommonPage<ArticleDTO>> getList(ArticleQueryParam articleQueryParam,
+    public Result<CommonPage<ArticleDTO>> getList(ArticleVO articleVO,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<ArticleDTO> articleList = articleService.list(articleQueryParam, pageSize, pageNum);
+        List<ArticleDTO> articleList = articleService.list(articleVO, pageSize, pageNum);
         CommonPage commonPage = new CommonPage<ArticleDTO>();
         return Result.success(CommonPage.restPage(articleList));
     }
@@ -59,7 +59,7 @@ public class IndexController {
     @ApiOperation(value = "获取标签列表")
     @GetMapping(value = "/getTagList")
     public Result getTagList() {
-        List<Tag> tagList = tagService.getTagList();
+        List<Tag> tagList = tagService.getTags();
         return Result.success(tagList);
     }
 
@@ -79,9 +79,11 @@ public class IndexController {
 
     @ApiOperation("获取文章分类列表")
     @GetMapping("/category/list")
-    public Result getCategoryList() {
-        List<Category> categoryList = categoryService.getCategoryList();
-        return Result.success(categoryList);
+    public Result getCategoryList(@RequestParam(name = "keyword", required = false) String keyword,
+                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                  @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+        List<Category> category = categoryService.getCategoryList(keyword, pageNum, pageSize);
+        return Result.success(CommonPage.restPage(category));
     }
 
 

@@ -12,7 +12,8 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class CommentVO {
+public class
+CommentVO {
 
     /**
      * 用户id

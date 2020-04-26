@@ -5,24 +5,23 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Role implements Serializable {
+    @ApiModelProperty(value = "唯一id")
     private Integer id;
 
-    @ApiModelProperty(value = "名称")
-    private String name;
+    @ApiModelProperty(value = "角色名")
+    private String roleName;
 
     @ApiModelProperty(value = "描述")
     private String description;
 
-    @ApiModelProperty(value = "后台用户数量")
-    private Integer adminCount;
+    @ApiModelProperty(value = "启用状态，0禁用，1启用")
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "启用状态：0->禁用；1->启用")
-    private Integer status;
-
-    private Integer sort;
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -34,12 +33,12 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getDescription() {
@@ -50,12 +49,12 @@ public class Role implements Serializable {
         this.description = description;
     }
 
-    public Integer getAdminCount() {
-        return adminCount;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setAdminCount(Integer adminCount) {
-        this.adminCount = adminCount;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -66,20 +65,12 @@ public class Role implements Serializable {
         this.createTime = createTime;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -89,12 +80,11 @@ public class Role implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
+        sb.append(", roleName=").append(roleName);
         sb.append(", description=").append(description);
-        sb.append(", adminCount=").append(adminCount);
-        sb.append(", createTime=").append(createTime);
         sb.append(", status=").append(status);
-        sb.append(", sort=").append(sort);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

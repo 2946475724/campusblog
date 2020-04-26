@@ -5,10 +5,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
+    @ApiModelProperty(value = "主键唯一id")
     private Integer id;
 
+    @ApiModelProperty(value = "用户名")
     private String username;
 
+    @ApiModelProperty(value = "密码")
     private String password;
 
     @ApiModelProperty(value = "头像")
@@ -23,14 +26,17 @@ public class User implements Serializable {
     @ApiModelProperty(value = "备注信息")
     private String note;
 
+    @ApiModelProperty(value = "帐号启用状态，0禁用，1启用")
+    private Integer status;
+
+    @ApiModelProperty(value = "删除状态，0删除，1未删除")
+    private Integer deleteStatus;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
     @ApiModelProperty(value = "最后登录时间")
     private Date loginTime;
-
-    @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
-    private Integer status;
 
     private static final long serialVersionUID = 1L;
 
@@ -90,6 +96,22 @@ public class User implements Serializable {
         this.note = note;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getDeleteStatus() {
+        return deleteStatus;
+    }
+
+    public void setDeleteStatus(Integer deleteStatus) {
+        this.deleteStatus = deleteStatus;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -106,14 +128,6 @@ public class User implements Serializable {
         this.loginTime = loginTime;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -127,9 +141,10 @@ public class User implements Serializable {
         sb.append(", email=").append(email);
         sb.append(", nickName=").append(nickName);
         sb.append(", note=").append(note);
+        sb.append(", status=").append(status);
+        sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", createTime=").append(createTime);
         sb.append(", loginTime=").append(loginTime);
-        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

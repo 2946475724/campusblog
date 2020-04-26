@@ -435,63 +435,63 @@ public class LinkExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andDeleteStatusIsNull() {
+            addCriterion("delete_status is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andDeleteStatusIsNotNull() {
+            addCriterion("delete_status is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Boolean value) {
-            addCriterion("status =", value, "status");
+        public Criteria andDeleteStatusEqualTo(Integer value) {
+            addCriterion("delete_status =", value, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Boolean value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andDeleteStatusNotEqualTo(Integer value) {
+            addCriterion("delete_status <>", value, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Boolean value) {
-            addCriterion("status >", value, "status");
+        public Criteria andDeleteStatusGreaterThan(Integer value) {
+            addCriterion("delete_status >", value, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andDeleteStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("delete_status >=", value, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Boolean value) {
-            addCriterion("status <", value, "status");
+        public Criteria andDeleteStatusLessThan(Integer value) {
+            addCriterion("delete_status <", value, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andDeleteStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("delete_status <=", value, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Boolean> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andDeleteStatusIn(List<Integer> values) {
+            addCriterion("delete_status in", values, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Boolean> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andDeleteStatusNotIn(List<Integer> values) {
+            addCriterion("delete_status not in", values, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andDeleteStatusBetween(Integer value1, Integer value2) {
+            addCriterion("delete_status between", value1, value2, "deleteStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andDeleteStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("delete_status not between", value1, value2, "deleteStatus");
             return (Criteria) this;
         }
 

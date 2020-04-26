@@ -1,9 +1,9 @@
-package com.zs.campusblog.controller;
+package com.zs.campusblog.controller.admin;
 
 import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
+import com.zs.campusblog.common.aop.LogAop;
 import com.zs.campusblog.dto.ArticleDTO;
-import com.zs.campusblog.dto.ArticleQueryParam;
 import com.zs.campusblog.mbg.model.Article;
 import com.zs.campusblog.mbg.model.ArticleLike;
 import com.zs.campusblog.service.ArticleService;
@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zs
@@ -38,17 +39,18 @@ public class ArticleController {
     @Autowired
     LikedService likedService;
 
+
     @ApiOperation(value = "查询文章")
     @GetMapping(value = "/list")
-    public Result<CommonPage<ArticleDTO>> getList(ArticleQueryParam articleQueryParam,
+    public Result<CommonPage<ArticleDTO>> getList(ArticleVO articleVO,
                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
-        System.out.println(articleQueryParam);
-        List<ArticleDTO> articleList = articleService.list(articleQueryParam, pageSize, pageNum);
+        List<ArticleDTO> articleList = articleService.list(articleVO, pageSize, pageNum);
         CommonPage commonPage = new CommonPage<ArticleDTO>();
         return Result.success(CommonPage.restPage(articleList));
     }
 
+    @LogAop("添加文章")
     @ApiOperation(value = "添加文章")
     @PostMapping(value = "/add")
     public Result add(@RequestBody ArticleVO articleVO, BindingResult result) {
@@ -59,11 +61,11 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "编辑文章")
-    @PostMapping(value = "/edit/{id}")
-    public Result edit(@PathVariable Integer id, @RequestBody ArticleVO articleVO, BindingResult result) {
+    @PostMapping(value = "/edit")
+    public Result edit(@RequestBody ArticleVO articleVO, BindingResult result) {
         Article article = new Article();
         BeanUtils.copyProperties(articleVO, article);
-        article.setId(id);
+        article.setId(articleVO.getId());
         int count = articleService.createOrUpdate(article);
         if (count > 0) {
             return Result.success(count);
@@ -110,15 +112,29 @@ public class ArticleController {
         }
     }
 
+    @LogAop("根据文章id删除文章")
     @ApiOperation("根据文章id删除文章")
     @PostMapping("/delete")
     public Result deleteArticleById(@RequestParam("id") Integer id) {
         int result = articleService.deleteArticleById(id);
         if (result > 0) {
-            return Result.success(null,"删除成功");
+            return Result.success(null, "删除成功");
         } else {
             return Result.failed("删除失败");
         }
+    }
+
+    @ApiOperation("获取当前文章数")
+    @GetMapping("/count")
+    public Result getArticleCount() {
+        return Result.success(articleService.getArticleCount());
+    }
+
+    @ApiOperation(value = "获取一年内的文章贡献数", notes = "获取一年内的文章贡献度", response = String.class)
+    @GetMapping(value = "/getArticleContributeCount")
+    public Result<Map<String, Object>> getBlogContributeCount() {
+        Map<String, Object> resultMap = articleService.getArticleContributeCount();
+        return Result.success(resultMap);
     }
 
 

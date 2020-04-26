@@ -11,6 +11,8 @@
     <groupId>com.zs</groupId>
     <artifactId>campusblog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+<!--    <packaging>jar</packaging>-->
+    <packaging>war</packaging>
     <name>campusblog</name>
     <description>Demo project for Spring Boot</description>
 
@@ -140,6 +142,17 @@
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>2.5.0</version>
+        </dependency>
+        <!-- Gosn -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

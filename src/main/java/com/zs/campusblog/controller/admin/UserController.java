@@ -1,8 +1,10 @@
-package com.zs.campusblog.controller;
+package com.zs.campusblog.controller.admin;
 
 import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
+import com.zs.campusblog.common.aop.LogAop;
 import com.zs.campusblog.component.RedisFollowHelper;
+import com.zs.campusblog.dto.UserDTO;
 import com.zs.campusblog.dto.UserLoginDTO;
 import com.zs.campusblog.mbg.model.Permission;
 import com.zs.campusblog.mbg.model.User;
@@ -48,6 +50,7 @@ public class UserController {
         return Result.success(user);
     }
 
+    @LogAop("用户登录")
     @ApiOperation(value = "登录以后返回token")
     @PostMapping(value = "/login")
     public Result login(@RequestBody UserLoginDTO userLoginDTO, BindingResult result) {
@@ -71,10 +74,20 @@ public class UserController {
         User user = userService.getUserByUsername(username);
         Map<String, Object> data = new HashMap<>();
         data.put("username", user.getUsername());
-        data.put("roles", new String[]{"TEST"});
+        data.put("roles", roleService.getRoleListByUserId(user.getId()));
         data.put("menus", roleService.getMenuList(user.getId()));
         data.put("icon", user.getIcon());
         return Result.success(data);
+    }
+
+    @ApiOperation("删除用户")
+    @PostMapping("/delete/{id}")
+    public Result deleteUser(@PathVariable(name = "id") Integer id) {
+        int result = userService.delete(id);
+        if (result > 0) {
+            return Result.success("", "删除成功");
+        }
+        return Result.failed("删除失败");
     }
 
     @ApiOperation(value = "登出功能")
@@ -86,10 +99,10 @@ public class UserController {
     @ApiOperation("根据用户名或姓名分页获取用户列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public Result<CommonPage<User>> list(@RequestParam(value = "keyword", required = false) String keyword,
-                                         @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<User> adminList = userService.list(keyword, pageSize, pageNum);
+    public Result<CommonPage<UserDTO>> list(@RequestParam(value = "keyword", required = false) String keyword,
+                                            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<UserDTO> adminList = userService.list(keyword, pageSize, pageNum);
         return Result.success(CommonPage.restPage(adminList));
     }
 
@@ -150,6 +163,12 @@ public class UserController {
         Map<String, Set<String>> map = new HashMap<>();
         map.put("fans", fans);
         return Result.success(map);
+    }
+
+    @ApiOperation("获取当前网站用户数")
+    @GetMapping("/count")
+    public Result getUserCount() {
+        return Result.success(userService.getUserCount());
     }
 
 }

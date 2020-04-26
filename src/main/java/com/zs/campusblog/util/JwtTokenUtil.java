@@ -51,19 +51,19 @@ public class JwtTokenUtil {
     }
 
     /**
-     *  从token中获取JWT中的负载
+     *  从token中解析JWT中的负载
      */
     private Claims getClaimsFromToken(String token) {
-        Claims claims = null;
         try {
-            claims = Jwts.parser()
+            Claims claims = Jwts.parser()
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
+            return claims;
         } catch (Exception e) {
-            LOGGER.info("JWT格式验证失败:{}",token);
+            LOGGER.info("JWT格式验证失败:" + token);
+            return null;
         }
-        return claims;
     }
 
     /**
@@ -101,7 +101,7 @@ public class JwtTokenUtil {
     /**
      * 判断token是否已经失效
      */
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Date expiredDate = getExpiredDateFromToken(token);
         return expiredDate.before(new Date());
     }

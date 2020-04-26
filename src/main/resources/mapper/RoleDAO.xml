@@ -62,4 +62,15 @@
         GROUP BY
             r.id
     </select>
+
+    <select id="getRoleListByUserId" resultType="com.zs.campusblog.mbg.model.Role">
+        SELECT
+            r.*
+        FROM
+            user_role_relation urr
+            LEFT JOIN USER u ON urr.user_id = u.id
+            LEFT JOIN role r ON r.id = urr.role_id
+        WHERE
+            u.id = #{userId}
+    </select>
 </mapper>

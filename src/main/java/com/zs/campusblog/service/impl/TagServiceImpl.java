@@ -1,5 +1,6 @@
 package com.zs.campusblog.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zs.campusblog.dao.TagDAO;
 import com.zs.campusblog.dto.TagDTO;
 import com.zs.campusblog.mbg.mapper.TagMapper;
@@ -24,13 +25,23 @@ public class TagServiceImpl implements TagService {
     private TagDAO tagDAO;
 
     @Override
-    public List<Tag> getTagList() {
-        TagExample tagExample = new TagExample();
-        return tagMapper.selectByExample(tagExample);
+    public List<Tag> getTagList(String keyword, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return tagDAO.getTagList(keyword);
+    }
+
+    @Override
+    public List<Tag> getTags() {
+        return tagMapper.selectByExample(new TagExample());
     }
 
     @Override
     public TagDTO getTagById(Integer id) {
         return tagDAO.getTagById(id);
+    }
+
+    @Override
+    public int getTagCount() {
+        return tagDAO.getTagCount();
     }
 }

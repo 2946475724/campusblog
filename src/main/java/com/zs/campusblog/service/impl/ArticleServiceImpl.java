@@ -5,20 +5,20 @@ import com.zs.campusblog.dao.ArticleDAO;
 import com.zs.campusblog.dao.ArticleTagDAO;
 import com.zs.campusblog.dao.TagDAO;
 import com.zs.campusblog.dto.ArticleDTO;
-import com.zs.campusblog.dto.ArticleQueryParam;
 import com.zs.campusblog.mbg.mapper.ArticleMapper;
 import com.zs.campusblog.mbg.model.Article;
 import com.zs.campusblog.mbg.model.ArticleExample;
 import com.zs.campusblog.mbg.model.ArticleTag;
 import com.zs.campusblog.mbg.model.Tag;
 import com.zs.campusblog.service.ArticleService;
+import com.zs.campusblog.util.DateUtil;
+import com.zs.campusblog.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zs
@@ -87,9 +87,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
-    public List<ArticleDTO> list(ArticleQueryParam articleQueryParam, Integer pageSize, Integer pageNum) {
+    public List<ArticleDTO> list(ArticleVO articleVO, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);
-        return articleDAO.getArticleList(articleQueryParam);
+        return articleDAO.getArticleList(articleVO);
     }
 
     @Override
@@ -125,6 +125,43 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int deleteArticleById(Integer id) {
         return articleDAO.deleteArticleById(id);
+    }
+
+    @Override
+    public int getArticleCount() {
+        return articleDAO.getArticleCount();
+    }
+
+    @Override
+    public Map<String, Object> getArticleContributeCount() {
+        // 获取今天结束时间
+        String endTime = DateUtil.getNowTime();
+        // 获取365天前的日期
+        Date temp = DateUtil.getDate(endTime, -365);
+        String startTime = DateUtil.dateTimeToStr(temp);
+        List<Map<String, Object>> articleContributeMap = articleDAO.getArticleContributeCount(startTime, endTime);
+        List<String> dateList = DateUtil.getDayBetweenDates(startTime, endTime);
+        Map<String, Object> dateMap = new HashMap<>();
+        for (Map<String, Object> itemMap : articleContributeMap) {
+            dateMap.put(itemMap.get("DATE").toString(), itemMap.get("COUNT"));
+        }
+        List<List<Object>> resultList = new ArrayList<>();
+        for (String item : dateList) {
+            Integer count = 0;
+            if (dateMap.get(item) != null) {
+                count = Integer.valueOf(dateMap.get(item).toString());
+            }
+            List<Object> objectList = new ArrayList<>();
+            objectList.add(item);
+            objectList.add(count);
+            resultList.add(objectList);
+        }Map<String, Object> resultMap = new HashMap<>();
+        List<String> contributeDateList = new ArrayList<>();
+        contributeDateList.add(startTime);
+        contributeDateList.add(endTime);
+        resultMap.put("contributeDate" , contributeDateList);
+        resultMap.put("articleContributeCount" , resultList);
+        return resultMap;
     }
 
 

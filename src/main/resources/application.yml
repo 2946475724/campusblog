@@ -12,6 +12,7 @@ spring:
   redis:
     database: 0  #Redis数据库索引（默认为0）
     host: 47.101.54.228
+#    host: 127.0.0.1
     port: 6379
     password:  #Redis服务器连接密码（默认为空）
     jedis:
@@ -26,6 +27,8 @@ spring:
       enabled: true  #是否开启文件上传支持
       max-file-size: 30MB  #上传单个文件的最大大小，默认为1MB
       max-request-size: 100MB  #上传多文件时文件的总大小，默认为10MB
+  main:
+    allow-bean-definition-overriding: true
 
 #自定义文件上传路径
 image:
@@ -37,6 +40,8 @@ mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
     - classpath*:com/**/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true # 开启MyBatis驼峰命名规则自动转换
 
 #pagehelper分页插件配置
 pagehelper:
@@ -53,10 +58,11 @@ logging:
 
 # 自定义jwt key
 jwt:
+  tokenHead: Bearer  #JWT负载中拿到开头
   tokenHeader: Authorization #JWT存储的请求头
   secret: mySecret #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
-  tokenHead: Bearer  #JWT负载中拿到开头
+
 
 # OSS相关配置信息
 aliyun:
@@ -77,3 +83,25 @@ minio:
   bucketName: campusblog # 存储桶名称
   accessKey: minioadmin # 访问的key
   secretKey: minioadmin # 访问的秘钥
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /actuator/**
+      - /images/**
+      - /druid/**
+      - /user/login
+      - /user/register
+      - /user/info
+      - /user/logout
+      - /minio/upload
+      - /api/**

@@ -7,7 +7,7 @@
     <result column="summary" jdbcType="VARCHAR" property="summary" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, summary, url, click_count, status, sort, create_time, update_time
+    id, title, summary, url, click_count, delete_status, sort, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.zs.campusblog.mbg.model.LinkExample" resultMap="BaseResultMap">
     select
@@ -108,10 +108,10 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into link (title, summary, url, 
-      click_count, status, sort, 
+      click_count, delete_status, sort, 
       create_time, update_time)
     values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{clickCount,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{sort,jdbcType=INTEGER}, 
+      #{clickCount,jdbcType=INTEGER}, #{deleteStatus,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.Link">
@@ -132,8 +132,8 @@
       <if test="clickCount != null">
         click_count,
       </if>
-      <if test="status != null">
-        status,
+      <if test="deleteStatus != null">
+        delete_status,
       </if>
       <if test="sort != null">
         sort,
@@ -158,8 +158,8 @@
       <if test="clickCount != null">
         #{clickCount,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=INTEGER},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
@@ -196,8 +196,8 @@
       <if test="record.clickCount != null">
         click_count = #{record.clickCount,jdbcType=INTEGER},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+      <if test="record.deleteStatus != null">
+        delete_status = #{record.deleteStatus,jdbcType=INTEGER},
       </if>
       <if test="record.sort != null">
         sort = #{record.sort,jdbcType=INTEGER},
@@ -220,7 +220,7 @@
       summary = #{record.summary,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       click_count = #{record.clickCount,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=BIT},
+      delete_status = #{record.deleteStatus,jdbcType=INTEGER},
       sort = #{record.sort,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -243,8 +243,8 @@
       <if test="clickCount != null">
         click_count = #{clickCount,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=INTEGER},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -264,7 +264,7 @@
       summary = #{summary,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       click_count = #{clickCount,jdbcType=INTEGER},
-      status = #{status,jdbcType=BIT},
+      delete_status = #{deleteStatus,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

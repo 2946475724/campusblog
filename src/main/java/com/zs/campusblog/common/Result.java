@@ -15,6 +15,12 @@ public class Result<T> {
 
     private Result() {}
 
+    public Result(ResultCode resultCode, T data) {
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg();
+        this.data = data;
+    }
+
     public Result(Integer code, String msg, T data) {
         this.code = code;
         this.msg = msg;
@@ -44,12 +50,10 @@ public class Result<T> {
 
     /**
      * 失败返回结果
-     * @param errorCode 错误码
      */
-    public static <T> Result<T> failed(ErrorCode errorCode) {
-        return new Result<T>(errorCode.getCode(), errorCode.getMsg(), null);
+    public static <T> Result<T> failed() {
+        return new Result<T>(ResultCode.FAILED.getCode(), ResultCode.FAILED.getMsg(), null);
     }
-
 
     /**
      * 失败返回结果
@@ -59,19 +63,6 @@ public class Result<T> {
         return new Result<T>(ResultCode.FAILED.getCode(), message, null);
     }
 
-    /**
-     * 失败返回结果
-     */
-    public static <T> Result<T> failed() {
-        return failed(ResultCode.FAILED);
-    }
-
-    /**
-     * 参数验证失败返回结果
-     */
-    public static <T> Result<T> validateFailed() {
-        return failed(ResultCode.VALIDATE_FAILED);
-    }
 
     /**
      * 参数验证失败返回结果
@@ -94,7 +85,6 @@ public class Result<T> {
     public static <T> Result<T> forbidden(T data) {
         return new Result<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMsg(), data);
     }
-
 
 
     public Integer getCode() {

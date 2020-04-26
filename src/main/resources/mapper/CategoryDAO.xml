@@ -10,8 +10,25 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
-    <select id="getCategoryList" resultMap="BaseResultMap">
+    <select id="getCategoryList" parameterType="string" resultMap="BaseResultMap">
         select * from category
+        <where>
+            <if test="keyword != null || keyword != ''">
+                name like CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="getArticleCountByCategory" resultType="com.zs.campusblog.vo.CategoryVO">
+        SELECT
+            c.*,
+            count( c.id ) as value
+        FROM
+            category c
+            LEFT JOIN article a ON c.id = a.category_id
+        GROUP BY
+            c.id
     </select>
 
 </mapper>

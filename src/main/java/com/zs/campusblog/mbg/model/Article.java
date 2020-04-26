@@ -26,7 +26,7 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "用户id")
     private Integer userId;
 
-    @ApiModelProperty(value = "删除状态：0未删除；1已删除")
+    @ApiModelProperty(value = "删除状态：0已删除；1未删除")
     private Integer deleteStatus;
 
     @ApiModelProperty(value = "文章标签")

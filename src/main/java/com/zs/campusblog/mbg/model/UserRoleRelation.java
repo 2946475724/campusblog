@@ -4,10 +4,13 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class UserRoleRelation implements Serializable {
+    @ApiModelProperty(value = "唯一id")
     private Integer id;
 
+    @ApiModelProperty(value = "用户id")
     private Integer userId;
 
+    @ApiModelProperty(value = "角色id")
     private Integer roleId;
 
     private static final long serialVersionUID = 1L;
