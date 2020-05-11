@@ -6,10 +6,7 @@ import com.zs.campusblog.dao.ArticleTagDAO;
 import com.zs.campusblog.dao.TagDAO;
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.mbg.mapper.ArticleMapper;
-import com.zs.campusblog.mbg.model.Article;
-import com.zs.campusblog.mbg.model.ArticleExample;
-import com.zs.campusblog.mbg.model.ArticleTag;
-import com.zs.campusblog.mbg.model.Tag;
+import com.zs.campusblog.mbg.model.*;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.util.DateUtil;
 import com.zs.campusblog.vo.ArticleVO;
@@ -164,5 +161,44 @@ public class ArticleServiceImpl implements ArticleService {
         return resultMap;
     }
 
+    @Override
+    public int addArticleViewCount(Integer id) {
+        return articleDAO.addArticleViewCount(id);
+    }
+
+    @Override
+    public int collectionArticle(ArticleCollection articleCollection) {
+        ArticleCollection result = articleDAO.getArticleCollection(articleCollection);
+        if (articleCollection.getStatus() == 1 && result == null) {
+            articleDAO.incrementCollections(articleCollection.getArticleId());
+            return articleDAO.collectionArticle(articleCollection);
+        } else {
+            if (articleCollection.getStatus() == 1) {
+                articleDAO.incrementCollections(articleCollection.getArticleId());
+            } else {
+                articleDAO.decrementCollections(articleCollection.getArticleId());
+            }
+            return articleDAO.unCollectionArticle(articleCollection);
+        }
+    }
+
+    @Override
+    public Integer getCollectionStatus(Integer articleId, Integer userId) {
+        Integer result = articleDAO.getCollectionStatus(articleId, userId);
+        if (result == null) {
+            return 0;
+        }
+        return result;
+    }
+
+    @Override
+    public Integer addComment(Integer articleId) {
+        return articleDAO.incrementComment(articleId);
+    }
+
+    @Override
+    public List<ArticleDTO> getCollectArticleByUserId(Integer userId) {
+        return articleDAO.getCollectArticleByUserId(userId);
+    }
 
 }

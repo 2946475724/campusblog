@@ -39,9 +39,5 @@ public class TagController {
         return Result.success(tag);
     }
 
-    @ApiOperation("获取标签数")
-    @GetMapping("/getTagCount")
-    public Result getTagCount() {
-        return Result.success(tagService.getTagCount());
-    }
+
 }

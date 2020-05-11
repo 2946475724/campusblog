@@ -48,4 +48,16 @@ public class MenuController {
         List<MenuNode> list = menuService.treeList();
         return Result.success(list);
     }
+
+    @ApiOperation("更新菜单显示与隐藏")
+    @PostMapping(value = "/hidden/update/{id}")
+    public Result updateMenuHiddenStatus(@PathVariable("id") Integer id, @RequestParam("hidden") Integer hidden) {
+        int result = menuService.updateHidden(id, hidden);
+        if (result > 0) {
+            return Result.success("", "更新成功");
+        } else {
+            return Result.failed("更新失败");
+        }
+    }
+
 }

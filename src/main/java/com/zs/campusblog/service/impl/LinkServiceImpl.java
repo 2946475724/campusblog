@@ -50,4 +50,9 @@ public class LinkServiceImpl implements LinkService {
     public Link getLinkById(Integer id) {
         return linkMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public List<Link> getLinkListBySort() {
+        return linkDAO.getLinkListBySort();
+    }
 }

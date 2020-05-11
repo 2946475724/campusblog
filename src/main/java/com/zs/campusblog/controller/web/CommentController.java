@@ -6,6 +6,7 @@ import com.zs.campusblog.mbg.mapper.UserMapper;
 import com.zs.campusblog.mbg.model.Comment;
 import com.zs.campusblog.mbg.model.User;
 import com.zs.campusblog.mbg.model.UserExample;
+import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.CommentService;
 import com.zs.campusblog.service.UserService;
 import com.zs.campusblog.vo.CommentVO;
@@ -16,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zs
@@ -33,6 +37,8 @@ public class CommentController {
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ArticleService articleService;
 
     @ApiOperation(value = "增加评论")
     @PostMapping("/add")
@@ -42,6 +48,7 @@ public class CommentController {
         BeanUtils.copyProperties(commentVO, comment);
         BeanUtils.copyProperties(commentVO, commentDTO);
         commentService.add(comment);
+        articleService.addComment(commentVO.getArticleId());
         User user = userService.getUserById(commentVO.getUserId());
         commentDTO.setUser(user);
         return Result.success(commentDTO);

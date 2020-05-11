@@ -70,7 +70,7 @@ public interface RoleService {
      * 给角色分配菜单
      */
     @Transactional
-    int allocMenu(Long roleId, List<Integer> menuIds);
+    int allocMenu(Integer roleId, List<Integer> menuIds);
 
     /**
      * 给角色分配资源

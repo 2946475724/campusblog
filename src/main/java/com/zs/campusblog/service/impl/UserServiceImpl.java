@@ -11,6 +11,7 @@ import com.zs.campusblog.dto.UserDetail;
 import com.zs.campusblog.mbg.mapper.UserMapper;
 import com.zs.campusblog.mbg.mapper.UserRoleRelationMapper;
 import com.zs.campusblog.mbg.model.*;
+import com.zs.campusblog.service.RoleService;
 import com.zs.campusblog.service.UserService;
 import com.zs.campusblog.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -29,8 +32,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zs
@@ -41,6 +46,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    private static final String FOLLOW = "FOLLOW:%s";
+    private static final String FANS = "FANS:%s";
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -58,6 +66,10 @@ public class UserServiceImpl implements UserService{
     private UserRoleRelationDAO userRoleRelationDAO;
     @Autowired
     private UserRoleRelationMapper userRoleRelationMapper;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @Override
     public User getUserByUsername(String username) {
@@ -100,9 +112,16 @@ public class UserServiceImpl implements UserService{
     public String login(String username, String password) {
         String token = null;
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = loadUserByUsername(username);
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
+            }
+            User user = getUserByUsername(username);
+            if (user != null) {
+                List<Resource> resourceList = getResourceList(user.getId());
+                if (resourceList.size() == 0) {
+                    throw new AccessDeniedException("您没有访问权限！");
+                }
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -132,18 +151,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int update(User user) {
-        User rawUser = userMapper.selectByPrimaryKey(user.getId());
-        if (rawUser.getPassword().equals(user.getPassword())) {
-            //与原加密密码相同的不需要修改
-            user.setPassword(null);
-        } else {
-            //与原加密密码不同的需要加密修改
-            if (user.getPassword().isEmpty()) {
-                user.setPassword(null);
-            } else {
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-        }
+//        User rawUser = userMapper.selectByPrimaryKey(user.getId());
+//        if (rawUser.getPassword().equals(user.getPassword())) {
+//            //与原加密密码相同的不需要修改
+//            user.setPassword(null);
+//        } else {
+//            //与原加密密码不同的需要加密修改
+//            if (user.getPassword().isEmpty()) {
+//                user.setPassword(null);
+//            } else {
+//                user.setPassword(passwordEncoder.encode(user.getPassword()));
+//            }
+//        }
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
@@ -214,5 +233,61 @@ public class UserServiceImpl implements UserService{
     @Override
     public int getUserCount() {
         return userDAO.getUserCount();
+    }
+
+    @Override
+    public void follow(Integer userId, Integer followingId) {
+        String followingKey = String.format(FOLLOW, userId);
+        String fansKey = String.format(FANS, followingId);
+        long createTime = System.currentTimeMillis();
+        redisTemplate.opsForZSet().add(followingKey, String.valueOf(followingId), createTime);
+        redisTemplate.opsForZSet().add(fansKey, String.valueOf(userId), createTime);
+    }
+
+    @Override
+    public void unFollow(Integer userId, Integer followingId) {
+        String followingKey = String.format(FOLLOW, userId);
+        String fansKey = String.format(FANS, followingId);
+        redisTemplate.opsForZSet().remove(followingKey, String.valueOf(followingId));
+        redisTemplate.opsForZSet().remove(fansKey, String.valueOf(userId));
+    }
+
+    @Override
+    public List<User> getFollowings(Integer userId) {
+        String followingKey = String.format(FOLLOW, userId);
+        Set<String> follows = redisTemplate.opsForZSet().range(followingKey, 0, -1);
+        List<User> userList = new ArrayList<>();
+        for (String follow : follows) {
+            User user = new User();
+            user = userMapper.selectByPrimaryKey(Integer.valueOf(follow));
+            userList.add(user);
+        }
+        return userList;
+    }
+
+    @Override
+    public Set<String> getFollowingIds(Integer userId) {
+        String followingKey = String.format(FOLLOW, userId);
+        Set<String> follows = redisTemplate.opsForZSet().range(followingKey, 0, -1);
+        return follows;
+    }
+
+    @Override
+    public Long getFollowNum(Integer userId) {
+        String followingKey = String.format(FOLLOW, userId);
+        return redisTemplate.opsForZSet().zCard(followingKey);
+    }
+
+    @Override
+    public Set<String> getFans(Integer followingId) {
+        String fansKey = String.format(FANS, followingId);
+        Set<String> fans = redisTemplate.opsForZSet().range(fansKey, 0, -1);
+        return fans;
+    }
+
+    @Override
+    public Long getFansNum(Integer followingId) {
+        String fansKey = String.format(FANS, followingId);
+        return redisTemplate.opsForZSet().zCard(fansKey);
     }
 }

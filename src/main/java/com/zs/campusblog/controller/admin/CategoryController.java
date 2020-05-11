@@ -4,7 +4,6 @@ import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
 import com.zs.campusblog.mbg.model.Category;
 import com.zs.campusblog.service.CategoryService;
-import com.zs.campusblog.vo.CategoryVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +42,6 @@ public class CategoryController {
         return Result.success(category);
     }
 
-    @ApiOperation("获取不同分类的文章数")
-    @GetMapping("/getArticleCountByCategory")
-    public Result getArticleCountByCategory() {
-        List<CategoryVO> categories = categoryService.getArticleCountByCategory();
-        return Result.success(categories);
-    }
+
 
 }

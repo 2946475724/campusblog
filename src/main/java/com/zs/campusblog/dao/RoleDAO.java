@@ -15,12 +15,11 @@ import java.util.List;
 public interface RoleDAO {
     /**
      * 根据用户id获取菜单列表
-     * @param userId
-     * @return
      */
     List<Menu> getMenuList(@Param("userId") Integer userId);
 
-    List<Menu> getMenuListByRoleId(@Param("roleId") Integer roleId);
+    List<Menu>
+    getMenuListByRoleId(@Param("roleId") Integer roleId);
 
     List<Resource> getResourceListByRoleId(@Param("roleId") Integer roleId);
 

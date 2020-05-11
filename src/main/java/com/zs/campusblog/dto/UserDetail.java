@@ -63,5 +63,4 @@ public class UserDetail implements UserDetails{
         return user.getStatus().equals(1);
     }
 
-
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zs
@@ -106,4 +107,39 @@ public interface UserService {
      */
     int getUserCount();
 
+    /**
+     * 关注用户
+     */
+
+    void follow(Integer userId, Integer followingId);
+
+    /**
+     * 取消关注
+     */
+    void unFollow(Integer userId, Integer followingId);
+
+    /**
+     * 获取用户关注的人的信息
+     */
+    List<User> getFollowings(Integer userId);
+
+    /**
+     * 获取关注的人的Id
+     */
+    Set<String> getFollowingIds(Integer userId);
+
+    /**
+     * 获取关注数
+     */
+    Long getFollowNum(Integer userId);
+
+    /**
+     * 获取粉丝列表
+     */
+    Set<String> getFans(Integer followingId);
+
+    /**
+     * 获取粉丝数
+     */
+    Long getFansNum(Integer followingId);
 }

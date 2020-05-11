@@ -38,6 +38,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "点赞数")
     private Integer likes;
 
+    @ApiModelProperty(value = "收藏数")
+    private Integer collections;
+
     @ApiModelProperty(value = "评论数")
     private Integer comment;
 
@@ -149,6 +152,14 @@ public class Article implements Serializable {
         this.likes = likes;
     }
 
+    public Integer getCollections() {
+        return collections;
+    }
+
+    public void setCollections(Integer collections) {
+        this.collections = collections;
+    }
+
     public Integer getComment() {
         return comment;
     }
@@ -222,6 +233,7 @@ public class Article implements Serializable {
         sb.append(", tags=").append(tags);
         sb.append(", views=").append(views);
         sb.append(", likes=").append(likes);
+        sb.append(", collections=").append(collections);
         sb.append(", comment=").append(comment);
         sb.append(", level=").append(level);
         sb.append(", status=").append(status);

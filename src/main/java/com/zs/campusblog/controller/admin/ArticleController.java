@@ -5,7 +5,6 @@ import com.zs.campusblog.common.Result;
 import com.zs.campusblog.common.aop.LogAop;
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.mbg.model.Article;
-import com.zs.campusblog.mbg.model.ArticleLike;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.CategoryService;
 import com.zs.campusblog.service.LikedService;
@@ -19,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author zs
@@ -99,19 +97,6 @@ public class ArticleController {
         }
     }
 
-    @ApiOperation("文章点赞")
-    @PostMapping("/like")
-    public Result like(@RequestBody ArticleLike articleLike) {
-        int result = likedService.like(articleLike);
-        if (result > 0 && articleLike.getStatus() == 1) {
-            return Result.success("", "点赞成功");
-        } else if (result > 0 && articleLike.getStatus() == 0) {
-            return Result.success("", "取消点赞成功");
-        } else {
-            return Result.failed("点赞失败");
-        }
-    }
-
     @LogAop("根据文章id删除文章")
     @ApiOperation("根据文章id删除文章")
     @PostMapping("/delete")
@@ -124,18 +109,6 @@ public class ArticleController {
         }
     }
 
-    @ApiOperation("获取当前文章数")
-    @GetMapping("/count")
-    public Result getArticleCount() {
-        return Result.success(articleService.getArticleCount());
-    }
-
-    @ApiOperation(value = "获取一年内的文章贡献数", notes = "获取一年内的文章贡献度", response = String.class)
-    @GetMapping(value = "/getArticleContributeCount")
-    public Result<Map<String, Object>> getBlogContributeCount() {
-        Map<String, Object> resultMap = articleService.getArticleContributeCount();
-        return Result.success(resultMap);
-    }
 
 
 }

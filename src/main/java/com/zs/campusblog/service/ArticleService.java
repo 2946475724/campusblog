@@ -2,6 +2,7 @@ package com.zs.campusblog.service;
 
 import com.zs.campusblog.dto.ArticleDTO;
 import com.zs.campusblog.mbg.model.Article;
+import com.zs.campusblog.mbg.model.ArticleCollection;
 import com.zs.campusblog.vo.ArticleVO;
 
 import java.util.List;
@@ -62,5 +63,30 @@ public interface ArticleService {
      * 获取一年内文章的贡献数
      */
     Map<String, Object> getArticleContributeCount();
+
+    /**
+     * 文章浏览量+1
+     */
+    int addArticleViewCount(Integer id);
+
+    /**
+     * 收藏文章或取消收藏
+     */
+    int collectionArticle(ArticleCollection articleCollection);
+
+    /**
+     * 查询收藏状态
+     */
+    Integer getCollectionStatus(Integer articleId, Integer userId);
+
+    /**
+     * 根据文章id增加文章评论数
+     */
+    Integer addComment(Integer articleId);
+
+    /**
+     * 通过用户id获取用户收藏的文章
+     */
+    List<ArticleDTO> getCollectArticleByUserId(Integer userId);
 
 }

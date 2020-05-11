@@ -11,5 +11,4 @@ import lombok.Data;
 public class UserDTO extends User {
     private String roleName;
     private Integer roleId;
-
 }

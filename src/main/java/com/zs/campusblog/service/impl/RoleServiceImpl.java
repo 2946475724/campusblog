@@ -1,10 +1,14 @@
 package com.zs.campusblog.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zs.campusblog.dao.RoleDAO;
 import com.zs.campusblog.dao.UserRoleRelationDAO;
 import com.zs.campusblog.mbg.mapper.RoleMapper;
+import com.zs.campusblog.mbg.mapper.RoleMenuRelationMapper;
+import com.zs.campusblog.mbg.mapper.RoleResourceRelationMapper;
 import com.zs.campusblog.mbg.model.*;
 import com.zs.campusblog.service.RoleService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,10 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     RoleMapper roleMapper;
+    @Autowired
+    RoleMenuRelationMapper roleMenuRelationMapper;
+    @Autowired
+    RoleResourceRelationMapper roleResourceRelationMapper;
     @Autowired
     private RoleDAO roleDAO;
     @Autowired
@@ -57,7 +65,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> list(String keyword, Integer pageSize, Integer pageNum) {
-        return null;
+        PageHelper.startPage(pageNum, pageSize);
+        RoleExample example = new RoleExample();
+        if (!StringUtils.isEmpty(keyword)) {
+            example.createCriteria().andRoleNameLike("%" + keyword + "%");
+        }
+        return roleMapper.selectByExample(example);
     }
 
     @Override
@@ -67,22 +80,44 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Menu> listMenu(Integer roleId) {
-        return null;
+        return roleDAO.getMenuListByRoleId(roleId);
     }
 
     @Override
     public List<Resource> listResource(Integer roleId) {
-        return null;
+        return roleDAO.getResourceListByRoleId(roleId);
     }
 
     @Override
-    public int allocMenu(Long roleId, List<Integer> menuIds) {
-        return 0;
+    public int allocMenu(Integer roleId, List<Integer> menuIds) {
+        // 先删除原有的关系
+        RoleMenuRelationExample example = new RoleMenuRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        roleMenuRelationMapper.deleteByExample(example);
+        // 批量插入新关系
+        for (Integer menuId : menuIds) {
+            RoleMenuRelation roleMenuRelation = new RoleMenuRelation();
+            roleMenuRelation.setRoleId(roleId);
+            roleMenuRelation.setMenuId(menuId);
+            roleMenuRelationMapper.insert(roleMenuRelation);
+        }
+        return menuIds.size();
     }
 
     @Override
     public int allocResource(Integer roleId, List<Integer> resourceIds) {
-        return 0;
+        // 先删除原有关系
+        RoleResourceRelationExample example = new RoleResourceRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        roleResourceRelationMapper.deleteByExample(example);
+        // 批量插入新关系
+        for (Integer resourceId : resourceIds) {
+            RoleResourceRelation relation = new RoleResourceRelation();
+            relation.setRoleId(roleId);
+            relation.setResourceId(resourceId);
+            roleResourceRelationMapper.insert(relation);
+        }
+        return resourceIds.size();
     }
 
     @Override

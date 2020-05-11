@@ -12,11 +12,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class UploadFileConfig implements WebMvcConfigurer {
-    @Value("${image.upload.path}")
+    @Value("${image.upload.windowsPath}")
     private String baseFolderPath;
+
+    @Value("${image.upload.linuxPath}")
+    private String linuxBaseFolderPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**").addResourceLocations("file:" + baseFolderPath);
+        String os = System.getProperty("os.name");
+        if (os.toLowerCase().startsWith("win")) {
+            // 如果是Windows系统
+            registry.addResourceHandler("/images/**").addResourceLocations("file:" + baseFolderPath);
+        } else {
+            // linux或mac系统
+            registry.addResourceHandler("/images/**").addResourceLocations("file:" + linuxBaseFolderPath);
+        }
     }
 }

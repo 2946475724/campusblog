@@ -35,4 +35,8 @@ public interface LinkService {
      */
     Link getLinkById(Integer id);
 
+    /**
+     * 根据排序获取前五条友情链接
+     */
+    List<Link> getLinkListBySort();
 }

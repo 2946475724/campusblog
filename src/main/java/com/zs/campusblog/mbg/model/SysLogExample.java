@@ -725,6 +725,146 @@ public class SysLogExample {
             return (Criteria) this;
         }
 
+        public Criteria andOsIsNull() {
+            addCriterion("os is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsIsNotNull() {
+            addCriterion("os is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsEqualTo(String value) {
+            addCriterion("os =", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsNotEqualTo(String value) {
+            addCriterion("os <>", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsGreaterThan(String value) {
+            addCriterion("os >", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsGreaterThanOrEqualTo(String value) {
+            addCriterion("os >=", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsLessThan(String value) {
+            addCriterion("os <", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsLessThanOrEqualTo(String value) {
+            addCriterion("os <=", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsLike(String value) {
+            addCriterion("os like", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsNotLike(String value) {
+            addCriterion("os not like", value, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsIn(List<String> values) {
+            addCriterion("os in", values, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsNotIn(List<String> values) {
+            addCriterion("os not in", values, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsBetween(String value1, String value2) {
+            addCriterion("os between", value1, value2, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andOsNotBetween(String value1, String value2) {
+            addCriterion("os not between", value1, value2, "os");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserIsNull() {
+            addCriterion("browser is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserIsNotNull() {
+            addCriterion("browser is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserEqualTo(String value) {
+            addCriterion("browser =", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserNotEqualTo(String value) {
+            addCriterion("browser <>", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserGreaterThan(String value) {
+            addCriterion("browser >", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserGreaterThanOrEqualTo(String value) {
+            addCriterion("browser >=", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserLessThan(String value) {
+            addCriterion("browser <", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserLessThanOrEqualTo(String value) {
+            addCriterion("browser <=", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserLike(String value) {
+            addCriterion("browser like", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserNotLike(String value) {
+            addCriterion("browser not like", value, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserIn(List<String> values) {
+            addCriterion("browser in", values, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserNotIn(List<String> values) {
+            addCriterion("browser not in", values, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserBetween(String value1, String value2) {
+            addCriterion("browser between", value1, value2, "browser");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrowserNotBetween(String value1, String value2) {
+            addCriterion("browser not between", value1, value2, "browser");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

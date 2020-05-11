@@ -33,7 +33,8 @@ spring:
 #自定义文件上传路径
 image:
   upload:
-    path: E:/IdeaProjects/campusblog/upload/images/
+    windowsPath: E:/IdeaProjects/campusblog/upload/images/
+    linuxPath: /usr/images/
 
 #MyBatis配置
 mybatis:
@@ -62,7 +63,6 @@ jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: mySecret #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
-
 
 # OSS相关配置信息
 aliyun:
@@ -105,3 +105,5 @@ secure:
       - /user/logout
       - /minio/upload
       - /api/**
+      - /index.html
+      - /static/**

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author zs
@@ -84,18 +85,22 @@ public class LogAspect {
         sysLog.setOperation(logAop.value());
         sysLog.setCreateTime(new Date());
         sysLog.setUpdateTime(new Date());
+        Map<String, String> osAndBrowser = IpUtil.getOsAndBrowserInfo(request);
+        sysLog.setOs(osAndBrowser.get("OS"));
+        sysLog.setBrowser(osAndBrowser.get("BROWSER"));
 
-        UserDetail userDetail = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        sysLog.setUsername(userDetail.getUsername());
-        log.info("打印数据" + sysLog);
     }
 
     @AfterReturning("pointcut(logAop)")
-    public void doAfterReturning(LogAop logAop) {
+    public void doAfterReturning(LogAop logAop){
         Date endTime = new Date();
         Long spendTime = DateUtil.between(startTime, endTime, DateUnit.MS);
         // 计算请求接口花费的时间，单位毫秒
         sysLog.setSpendTime(spendTime.intValue());
+        UserDetail userDetail = null;
+        userDetail = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        sysLog.setUsername(userDetail.getUsername());
         sysLogService.add(sysLog);
     }
 }

@@ -1,0 +1,82 @@
+/* css */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #333;
+  background-color: #f6f6f6;
+  line-height: 1.5;
+  letter-spacing: .7px;
+  font-family: -apple-system,
+    BlinkMacSystemFont,
+    Helvetica Neue,
+    PingFang SC,
+    Microsoft YaHei,
+    Source Han Sans SC,
+    Noto Sans CJK SC,
+    WenQuanYi Micro Hei,
+    sans-serif
+}
+
+img {
+  border: 0;
+  display: block;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #555;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #eeaaee;
+}
+
+.clear {
+  clear: both;
+}
+
+
+.main-container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.main-content {
+  width: 800px;
+}
+
+
+.btn {
+  border: 1px solid #999;
+  transition: all .2s cubic-bezier(.645, .045, .355, 1);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 4px 12px;
+  outline: none;
+}
+
+.input {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0 15px;
+  background: transparent none repeat scroll 0 0;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.icon-size {
+  font-size: 12px;
+}

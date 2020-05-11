@@ -1,6 +1,5 @@
 package com.zs.campusblog;
 
-import com.zs.campusblog.component.RedisFollowHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

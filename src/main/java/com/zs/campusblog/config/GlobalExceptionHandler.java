@@ -4,6 +4,8 @@ import com.zs.campusblog.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,6 +49,21 @@ public class GlobalExceptionHandler {
         return Result.failed("方法参数未校验");
     }
 
+    @ExceptionHandler({CustomException.class})
+    public Result handleCustomException(CustomException ex) {
+        return Result.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public Object AccessDeniedExceptionHandler(AccessDeniedException exception) throws Exception {
+        return Result.failed("您没有访问权限！");
+    }
+
+    @ExceptionHandler({AuthenticationException.class})
+    public Result handleAuthenticationException(AuthenticationException ex) {
+        return Result.failed(ex.getMessage());
+    }
+
     /**
      * 系统异常 预期以外异常
      */
@@ -56,4 +73,8 @@ public class GlobalExceptionHandler {
         log.error("系统异常：" + ex);
         return Result.failed("系统发生异常，请联系管理员");
     }
+
+
+
+
 }

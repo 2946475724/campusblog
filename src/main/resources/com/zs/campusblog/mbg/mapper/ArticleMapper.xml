@@ -13,6 +13,7 @@
     <result column="tags" jdbcType="VARCHAR" property="tags" />
     <result column="views" jdbcType="INTEGER" property="views" />
     <result column="likes" jdbcType="INTEGER" property="likes" />
+    <result column="collections" jdbcType="INTEGER" property="collections" />
     <result column="comment" jdbcType="INTEGER" property="comment" />
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -83,7 +84,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, title, summary, cover_image, type, category_id, user_id, delete_status, tags, 
-    views, likes, comment, level, status, create_time, update_time
+    views, likes, collections, comment, level, status, create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
     content, content_html
@@ -143,15 +144,17 @@
     insert into article (title, summary, cover_image, 
       type, category_id, user_id, 
       delete_status, tags, views, 
-      likes, comment, level, 
-      status, create_time, update_time, 
-      content, content_html)
+      likes, collections, comment, 
+      level, status, create_time, 
+      update_time, content, content_html
+      )
     values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
       #{deleteStatus,jdbcType=INTEGER}, #{tags,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, 
-      #{likes,jdbcType=INTEGER}, #{comment,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR})
+      #{likes,jdbcType=INTEGER}, #{collections,jdbcType=INTEGER}, #{comment,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.Article">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -188,6 +191,9 @@
       </if>
       <if test="likes != null">
         likes,
+      </if>
+      <if test="collections != null">
+        collections,
       </if>
       <if test="comment != null">
         comment,
@@ -241,6 +247,9 @@
       </if>
       <if test="likes != null">
         #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="collections != null">
+        #{collections,jdbcType=INTEGER},
       </if>
       <if test="comment != null">
         #{comment,jdbcType=INTEGER},
@@ -307,6 +316,9 @@
       <if test="record.likes != null">
         likes = #{record.likes,jdbcType=INTEGER},
       </if>
+      <if test="record.collections != null">
+        collections = #{record.collections,jdbcType=INTEGER},
+      </if>
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=INTEGER},
       </if>
@@ -346,6 +358,7 @@
       tags = #{record.tags,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=INTEGER},
       likes = #{record.likes,jdbcType=INTEGER},
+      collections = #{record.collections,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=INTEGER},
       level = #{record.level,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
@@ -370,6 +383,7 @@
       tags = #{record.tags,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=INTEGER},
       likes = #{record.likes,jdbcType=INTEGER},
+      collections = #{record.collections,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=INTEGER},
       level = #{record.level,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
@@ -412,6 +426,9 @@
       <if test="likes != null">
         likes = #{likes,jdbcType=INTEGER},
       </if>
+      <if test="collections != null">
+        collections = #{collections,jdbcType=INTEGER},
+      </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=INTEGER},
       </if>
@@ -448,6 +465,7 @@
       tags = #{tags,jdbcType=VARCHAR},
       views = #{views,jdbcType=INTEGER},
       likes = #{likes,jdbcType=INTEGER},
+      collections = #{collections,jdbcType=INTEGER},
       comment = #{comment,jdbcType=INTEGER},
       level = #{level,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
@@ -469,6 +487,7 @@
       tags = #{tags,jdbcType=VARCHAR},
       views = #{views,jdbcType=INTEGER},
       likes = #{likes,jdbcType=INTEGER},
+      collections = #{collections,jdbcType=INTEGER},
       comment = #{comment,jdbcType=INTEGER},
       level = #{level,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},

@@ -11,6 +11,8 @@
     <result column="method" jdbcType="VARCHAR" property="method" />
     <result column="params" jdbcType="VARCHAR" property="params" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="spend_time" jdbcType="INTEGER" property="spendTime" />
@@ -74,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, url, type, class_path, operation, method, params, ip, create_time, 
-    update_time, spend_time
+    id, username, url, type, class_path, operation, method, params, ip, os, browser, 
+    create_time, update_time, spend_time
   </sql>
   <select id="selectByExample" parameterType="com.zs.campusblog.mbg.model.SysLogExample" resultMap="BaseResultMap">
     select
@@ -113,12 +115,14 @@
     </selectKey>
     insert into sys_log (username, url, type, 
       class_path, operation, method, 
-      params, ip, create_time, 
-      update_time, spend_time)
+      params, ip, os, browser, 
+      create_time, update_time, spend_time
+      )
     values (#{username,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{classPath,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
-      #{params,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{spendTime,jdbcType=INTEGER})
+      #{params,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{spendTime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.SysLog">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -149,6 +153,12 @@
       </if>
       <if test="ip != null">
         ip,
+      </if>
+      <if test="os != null">
+        os,
+      </if>
+      <if test="browser != null">
+        browser,
       </if>
       <if test="createTime != null">
         create_time,
@@ -184,6 +194,12 @@
       </if>
       <if test="ip != null">
         #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null">
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        #{browser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -232,6 +248,12 @@
       <if test="record.ip != null">
         ip = #{record.ip,jdbcType=VARCHAR},
       </if>
+      <if test="record.os != null">
+        os = #{record.os,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browser != null">
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -257,6 +279,8 @@
       method = #{record.method,jdbcType=VARCHAR},
       params = #{record.params,jdbcType=VARCHAR},
       ip = #{record.ip,jdbcType=VARCHAR},
+      os = #{record.os,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       spend_time = #{record.spendTime,jdbcType=INTEGER}
@@ -291,6 +315,12 @@
       <if test="ip != null">
         ip = #{ip,jdbcType=VARCHAR},
       </if>
+      <if test="os != null">
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -313,6 +343,8 @@
       method = #{method,jdbcType=VARCHAR},
       params = #{params,jdbcType=VARCHAR},
       ip = #{ip,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       spend_time = #{spendTime,jdbcType=INTEGER}

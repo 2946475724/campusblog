@@ -37,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        // 允许iframe访问接口
+        httpSecurity.headers().frameOptions().disable();
+
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         //不需要保护的资源路径允许访问

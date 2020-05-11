@@ -20,4 +20,9 @@ public interface UserDAO {
      * 获取用户数量
      */
     int getUserCount();
+
+    /**
+     * 根据用户名查询用户信息
+     */
+
 }

@@ -31,6 +31,12 @@ public class SysLog implements Serializable {
     @ApiModelProperty(value = "IP地址")
     private String ip;
 
+    @ApiModelProperty(value = "访问的系统")
+    private String os;
+
+    @ApiModelProperty(value = "访问的浏览器")
+    private String browser;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -114,6 +120,22 @@ public class SysLog implements Serializable {
         this.ip = ip;
     }
 
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -153,6 +175,8 @@ public class SysLog implements Serializable {
         sb.append(", method=").append(method);
         sb.append(", params=").append(params);
         sb.append(", ip=").append(ip);
+        sb.append(", os=").append(os);
+        sb.append(", browser=").append(browser);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", spendTime=").append(spendTime);

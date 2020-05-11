@@ -67,7 +67,11 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public int updateHidden(Integer id, Integer hidden) {
-        return 0;
+        Menu menu = new Menu();
+        menu.setHidden(hidden);
+        MenuExample example = new MenuExample();
+        example.createCriteria().andIdEqualTo(id);
+        return menuMapper.updateByExampleSelective(menu, example);
     }
 
     /**

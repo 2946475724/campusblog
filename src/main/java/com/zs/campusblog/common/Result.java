@@ -68,8 +68,8 @@ public class Result<T> {
      * 参数验证失败返回结果
      * @param message 提示信息
      */
-    public static <T> Result<T> validateFailed(String message) {
-        return new Result<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+    public static <T> Result<T> validateFailed(String msg) {
+        return new Result<T>(ResultCode.VALIDATE_FAILED.getCode(), msg, null);
     }
 
     /**

@@ -15,4 +15,9 @@ public interface LikedService {
      * 取消点赞
      */
     int unlike(ArticleLike articleLike);
+
+    /**
+     * 查询点赞状态
+     */
+    Integer getLikeStatus(Integer articleId, Integer userId);
 }

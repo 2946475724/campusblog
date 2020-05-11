@@ -17,12 +17,12 @@
         <result column="tags" property="tags" jdbcType="VARCHAR"/>
         <result column="views" property="views" jdbcType="INTEGER"/>
         <result column="likes" property="likes" jdbcType="INTEGER"/>
+        <result column="collections" property="collections" jdbcType="INTEGER"/>
         <result column="comment" property="comment" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="BIT"/>
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="level" property="level" jdbcType="INTEGER"/>
         <result column="delete_status" property="deleteStatus" javaType="INTEGER"/>
-        <result column="like_status" property="likeStatus" javaType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -36,7 +36,7 @@
         article a
         LEFT JOIN user u ON a.`user_id` = u.`id`
         LEFT JOIN category c ON a.`category_id` = c.`id`
-        <where>a.delete_status = 1
+        <where> a.delete_status = 1
             <if test="keyword != null and title != ''">
                 and (a.title like CONCAT('%',#{keyword},'%')
                 OR a.content like CONCAT('%',#{keyword},'%'))
@@ -54,11 +54,13 @@
             a.*,
             u.username,
             u.nick_name nickName,
-            al.status like_status
+            al.status like_status,
+            ac.status collection_status
         FROM
             article a
             LEFT JOIN USER u ON a.user_id = u.id
-            LEFT JOIN article_like al on a.user_id = al.user_id AND a.id = article_id
+            LEFT JOIN article_like al on a.user_id = al.user_id AND a.id = al.article_id
+            LEFT JOIN article_collection ac ON a.user_id = ac.user_id AND a.id = ac.article_id
         WHERE
             a.id = #{id}
     </select>
@@ -106,4 +108,5 @@
     <select id="getArticleCount" resultType="integer">
         select count(id) as articleCount from article where delete_status = 1
     </select>
+
 </mapper>

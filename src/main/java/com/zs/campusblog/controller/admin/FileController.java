@@ -26,7 +26,7 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class FileController {
 
-    @Value("${image.upload.path}")
+    @Value("${image.upload.windowsPath}")
     private String baseFolderPath;
 
     @ApiOperation(value = "图片上传")
@@ -61,7 +61,6 @@ public class FileController {
                     .append("/")
                     .append(imgName);
             System.out.println(url);
-
             Map<String, StringBuffer> urlMap = new HashMap<>();
             urlMap.put("url", url);
             return Result.success(urlMap, "上传成功");

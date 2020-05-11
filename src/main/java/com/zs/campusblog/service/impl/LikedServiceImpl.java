@@ -34,7 +34,6 @@ public class LikedServiceImpl implements LikedService {
         criteria.andUserIdEqualTo(articleLike.getUserId());
         criteria.andArticleIdEqualTo(articleLike.getArticleId());
         List<ArticleLike> result = articleLikeMapper.selectByExample(articleLikeExample);
-        System.out.println(result);
         if (result.isEmpty()) {
             articleLikeMapper.insertSelective(articleLike);
             articleDAO.incrementLikes(articleLike.getArticleId());
@@ -53,5 +52,14 @@ public class LikedServiceImpl implements LikedService {
             articleDAO.incrementLikes(articleLike.getArticleId());
         }
         return 1;
+    }
+
+    @Override
+    public Integer getLikeStatus(Integer articleId, Integer userId) {
+        Integer result = articleDAO.getLikeStatus(articleId, userId);
+        if (result == null) {
+            return 0;
+        }
+        return result;
     }
 }
