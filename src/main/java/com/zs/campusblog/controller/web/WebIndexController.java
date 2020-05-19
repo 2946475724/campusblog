@@ -3,11 +3,9 @@ package com.zs.campusblog.controller.web;
 import com.zs.campusblog.common.CommonPage;
 import com.zs.campusblog.common.Result;
 import com.zs.campusblog.dto.ArticleDTO;
-import com.zs.campusblog.dto.TagDTO;
 import com.zs.campusblog.mbg.model.Article;
 import com.zs.campusblog.mbg.model.Category;
 import com.zs.campusblog.mbg.model.Link;
-import com.zs.campusblog.mbg.model.Tag;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.CategoryService;
 import com.zs.campusblog.service.LinkService;
@@ -60,20 +58,6 @@ public class WebIndexController {
         return Result.success(hotArticles);
     }
 
-    @ApiOperation(value = "获取标签列表")
-    @GetMapping(value = "/getTagList")
-    public Result getTagList() {
-        List<Tag> tagList = tagService.getTags();
-        return Result.success(tagList);
-    }
-
-    @ApiOperation("根据标签id获取标签信息")
-    @GetMapping("/tag")
-    public Result getTagById(@RequestParam(name = "tagId") Integer id) {
-        TagDTO tag = tagService.getTagById(id);
-        return Result.success(tag);
-    }
-
     @ApiOperation("根据分类id获取分类信息")
     @GetMapping("/category")
     public Result getCategoryById(@RequestParam(name = "categoryId") Integer id) {
@@ -81,7 +65,7 @@ public class WebIndexController {
         return Result.success(articleList);
     }
 
-    @ApiOperation(value = "获取所有分类信息")
+    @ApiOperation(value = "分页获取所有分类信息")
     @GetMapping("/category/list")
     public Result getCategoryList(@RequestParam(name = "keyword", required = false) String keyword,
                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -90,11 +74,20 @@ public class WebIndexController {
         return Result.success(CommonPage.restPage(category));
     }
 
+    @ApiOperation(value = "获取所有分类信息")
+    @GetMapping("/category/listAll")
+    public Result getCategories() {
+        List<Category> categoryList = categoryService.getCategories();
+        return Result.success(categoryList);
+    }
+
     @ApiOperation("获取友情链接")
     @GetMapping("/link/list")
     public Result getLink() {
         List<Link> linkList = linkService.getLinkListBySort();
         return Result.success(linkList);
     }
+
+
 
 }

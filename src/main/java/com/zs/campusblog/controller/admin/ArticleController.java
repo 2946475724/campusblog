@@ -109,6 +109,12 @@ public class ArticleController {
         }
     }
 
+    @ApiOperation("修改文章推荐状态")
+    @PostMapping("/{id}/level")
+    public Result updateArticleLevel(@PathVariable("id") Integer id, Integer level) {
+        int result = articleService.updateArticleLevel(id, level);
+        return Result.success("");
+    }
 
 
 }

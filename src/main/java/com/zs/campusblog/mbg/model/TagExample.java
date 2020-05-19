@@ -235,6 +235,126 @@ public class TagExample {
             return (Criteria) this;
         }
 
+        public Criteria andClickCountIsNull() {
+            addCriterion("click_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountIsNotNull() {
+            addCriterion("click_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountEqualTo(Integer value) {
+            addCriterion("click_count =", value, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountNotEqualTo(Integer value) {
+            addCriterion("click_count <>", value, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountGreaterThan(Integer value) {
+            addCriterion("click_count >", value, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("click_count >=", value, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountLessThan(Integer value) {
+            addCriterion("click_count <", value, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountLessThanOrEqualTo(Integer value) {
+            addCriterion("click_count <=", value, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountIn(List<Integer> values) {
+            addCriterion("click_count in", values, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountNotIn(List<Integer> values) {
+            addCriterion("click_count not in", values, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountBetween(Integer value1, Integer value2) {
+            addCriterion("click_count between", value1, value2, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("click_count not between", value1, value2, "clickCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;
@@ -292,6 +412,66 @@ public class TagExample {
 
         public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
             addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNull() {
+            addCriterion("update_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNotNull() {
+            addCriterion("update_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeEqualTo(Date value) {
+            addCriterion("update_time =", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotEqualTo(Date value) {
+            addCriterion("update_time <>", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThan(Date value) {
+            addCriterion("update_time >", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_time >=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThan(Date value) {
+            addCriterion("update_time <", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_time <=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIn(List<Date> values) {
+            addCriterion("update_time in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotIn(List<Date> values) {
+            addCriterion("update_time not in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
+            addCriterion("update_time between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
     }

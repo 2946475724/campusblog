@@ -1,7 +1,9 @@
 package com.zs.campusblog.dao;
 
 import com.zs.campusblog.dto.UserDTO;
+import com.zs.campusblog.mbg.model.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -22,7 +24,9 @@ public interface UserDAO {
     int getUserCount();
 
     /**
-     * 根据用户名查询用户信息
+     * 根据用户id查询用户信息
      */
+    @Select("select * from user where id = #{id} and delete_status = 1 adn status = 1")
+    User getUserById(Integer id);
 
 }

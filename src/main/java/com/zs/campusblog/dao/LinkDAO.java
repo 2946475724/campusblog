@@ -21,6 +21,6 @@ public interface LinkDAO {
     /**
      * 根据排序获取前五条友情链接
      */
-    @Select("select * from link where sort is not null order by sort asc limit 0,5")
+    @Select("select * from link where sort is not null order by sort desc limit 0,5")
     List<Link> getLinkListBySort();
 }

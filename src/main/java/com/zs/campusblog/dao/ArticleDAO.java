@@ -26,6 +26,7 @@ public interface ArticleDAO {
     /**
      * 根据浏览量获取热门文章
      */
+    @Select("SELECT * from article WHERE delete_status = 1 ORDER BY views DESC limit 0,10")
     List<Article> getHotArticle();
 
     /**
@@ -39,9 +40,19 @@ public interface ArticleDAO {
     List<ArticleDTO> getArticlesByUserId(Integer id);
 
     /**
+     * 根据标签id获取文章列表
+     */
+    List<ArticleDTO> getArticlesByTagId(Integer id);
+
+    /**
      * 根据分类id获取文章列表
      */
     List<ArticleDTO> getArticlesByCategoryId(Integer categoryId);
+
+    /**
+     * 通过推荐获取文章
+     */
+    List<ArticleDTO> getArticlesWithLevel();
 
     /**
      * 更新文章表点赞数+1

@@ -45,10 +45,6 @@
         ORDER BY a.create_time DESC
     </select>
 
-    <select id="getHotArticle" resultMap="BaseResultMap">
-        SELECT * from article ORDER BY views DESC limit 0,10
-    </select>
-
     <select id="getArticleById" parameterType="integer" resultMap="BaseResultMap">
         SELECT
             a.*,
@@ -63,6 +59,25 @@
             LEFT JOIN article_collection ac ON a.user_id = ac.user_id AND a.id = ac.article_id
         WHERE
             a.id = #{id}
+    </select>
+
+    <select id="getArticlesByTagId" parameterType="integer" resultType="com.zs.campusblog.dto.ArticleDTO">
+        SELECT DISTINCT
+            a.*,
+            u.username,
+            u.nick_name nickName
+        FROM
+            article a
+            LEFT JOIN user u ON a.user_id = u.id
+        WHERE
+            a.id IN (
+            SELECT DISTINCT
+                article_id
+            FROM
+                article_tag
+            WHERE
+            tag_id = #{id}
+            )
     </select>
 
     <select id="getArticlesByUserId" parameterType="integer" resultMap="BaseResultMap">
@@ -83,14 +98,32 @@
         SELECT
             a.*,
             u.username,
-            u.nick_name
+            u.nick_name,
+            c.`name` AS categoryName
         FROM
             article a
             LEFT JOIN USER u ON a.user_id = u.id
+            LEFT JOIN category c ON a.category_id = c.id
         WHERE
             category_id = #{categoryId}
         ORDER BY
 	        a.create_time DESC
+    </select>
+
+    <select id="getArticlesWithLevel" resultType="com.zs.campusblog.dto.ArticleDTO">
+        SELECT
+            a.*,
+            u.username,
+            u.nick_name,
+            c.`name` AS categoryName
+        FROM
+            article a
+            LEFT JOIN USER u ON a.user_id = u.id
+            LEFT JOIN category c ON a.category_id = c.id
+        WHERE
+            LEVEL = 1
+        ORDER BY
+            a.create_time DESC
     </select>
 
     <update id="incrementLikes" parameterType="integer">

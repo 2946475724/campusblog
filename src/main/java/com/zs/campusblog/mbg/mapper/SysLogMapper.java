@@ -16,15 +16,21 @@ public interface SysLogMapper {
 
     int insertSelective(SysLog record);
 
+    List<SysLog> selectByExampleWithBLOBs(SysLogExample example);
+
     List<SysLog> selectByExample(SysLogExample example);
 
     SysLog selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") SysLog record, @Param("example") SysLogExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") SysLog record, @Param("example") SysLogExample example);
+
     int updateByExample(@Param("record") SysLog record, @Param("example") SysLogExample example);
 
     int updateByPrimaryKeySelective(SysLog record);
+
+    int updateByPrimaryKeyWithBLOBs(SysLog record);
 
     int updateByPrimaryKey(SysLog record);
 }

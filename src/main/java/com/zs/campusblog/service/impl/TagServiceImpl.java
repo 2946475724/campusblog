@@ -36,6 +36,14 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> getTagListByClickCount() {
+        TagExample example = new TagExample();
+        example.setOrderByClause("click_count desc");
+        example.createCriteria().andStatusEqualTo(0);
+        return tagMapper.selectByExample(example);
+    }
+
+    @Override
     public TagDTO getTagById(Integer id) {
         return tagDAO.getTagById(id);
     }
@@ -44,4 +52,32 @@ public class TagServiceImpl implements TagService {
     public int getTagCount() {
         return tagDAO.getTagCount();
     }
+
+    @Override
+    public int addTag(Tag tag) {
+        return tagMapper.insertSelective(tag);
+    }
+
+    @Override
+    public int updateTag(Tag tag) {
+        TagExample example = new TagExample();
+        example.createCriteria().andIdEqualTo(tag.getId());
+        return tagMapper.updateByExampleSelective(tag, example);
+    }
+
+    @Override
+    public List<TagDTO> getTagListWithHot() {
+        return tagDAO.getTagListWithHot();
+    }
+
+    @Override
+    public List<TagDTO> getTagListWithLatest() {
+        return tagDAO.getTagListWithLatest();
+    }
+
+    @Override
+    public int increaseClickCount(Integer id) {
+        return tagDAO.increaseClickCount(id);
+    }
+
 }

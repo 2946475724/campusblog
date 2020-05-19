@@ -10,6 +10,7 @@ import com.zs.campusblog.vo.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +39,17 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public List<CategoryVO> getArticleCountByCategory() {
         return categoryDAO.getArticleCountByCategory();
+    }
+
+    @Override
+    public int updateCategory(Category category) {
+        return categoryMapper.updateByPrimaryKeySelective(category);
+    }
+
+    @Override
+    public int addCategory(Category category) {
+        category.setCreateTime(new Date());
+        return categoryMapper.insertSelective(category);
     }
 
 

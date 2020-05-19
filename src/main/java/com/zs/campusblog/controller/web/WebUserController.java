@@ -42,10 +42,10 @@ public class WebUserController {
     @Autowired
     private ArticleService articleService;
 
-    @ApiOperation(value = "登录以后返回token")
+    @ApiOperation(value = "登录并返回token")
     @PostMapping(value = "/login")
     public Result login(@RequestBody UserVO userVO, BindingResult result) {
-        String token = userService.login(userVO.getUsername(), userVO.getPassword());
+        String token = userService.WebLogin(userVO.getUsername(), userVO.getPassword());
         if (token == null) {
             return Result.validateFailed("用户名或密码错误");
         }
@@ -155,6 +155,13 @@ public class WebUserController {
         Map<String, Set<String>> map = new HashMap<>();
         map.put("fans", fans);
         return Result.success(map);
+    }
+
+    @ApiOperation("根据用户id获取用户信息")
+    @GetMapping("/{id}")
+    public Result getUserById(@PathVariable("id") Integer id) {
+        User user = userService.getUserById(id);
+        return Result.success(user);
     }
 
 }

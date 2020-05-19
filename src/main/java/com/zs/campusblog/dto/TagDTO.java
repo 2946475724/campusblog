@@ -17,4 +17,7 @@ public class TagDTO extends Tag {
     @ApiModelProperty("文章信息")
     private List<Article> articles;
 
+    @ApiModelProperty("文章数")
+    private Integer articleCount;
+
 }

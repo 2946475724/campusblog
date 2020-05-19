@@ -95,6 +95,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleDTO> getArticlesWithLevel() {
+        return articleDAO.getArticlesWithLevel();
+    }
+
+    @Override
+    public int updateArticleLevel(Integer id, Integer level) {
+        Article article = new Article();
+        article.setId(id);
+        article.setLevel(level);
+        return articleMapper.updateByPrimaryKeySelective(article);
+    }
+
+    @Override
     public ArticleDTO getArticleById(Integer id) {
         ArticleDTO article = articleDAO.getArticleById(id);
         return article;
@@ -108,6 +121,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleDTO> getArticlesByCategoryId(Integer id) {
         return articleDAO.getArticlesByCategoryId(id);
+    }
+
+    @Override
+    public List<ArticleDTO> getArticlesByTagId(Integer id) {
+        return articleDAO.getArticlesByTagId(id);
     }
 
     @Override

@@ -39,5 +39,28 @@ public class TagController {
         return Result.success(tag);
     }
 
+    @ApiOperation("添加标签")
+    @PostMapping("/add")
+    public Result addTag(@RequestBody Tag tag) {
+        int result = tagService.addTag(tag);
+        if (result > 0) {
+            return Result.success("", "添加成功");
+        } else {
+            return Result.failed("添加失败");
+        }
+    }
+
+    @ApiOperation("编辑标签")
+    @PostMapping("/update")
+    public Result updateTag(@RequestBody Tag tag) {
+        int result = tagService.updateTag(tag);
+        if (result > 0) {
+            return Result.success("", "编辑成功");
+        } else {
+            return Result.failed("编辑失败");
+        }
+    }
+
+
 
 }

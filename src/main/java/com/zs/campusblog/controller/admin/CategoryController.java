@@ -7,10 +7,7 @@ import com.zs.campusblog.service.CategoryService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +38,28 @@ public class CategoryController {
         List<Category> category = categoryService.getCategories();
         return Result.success(category);
     }
+
+    @ApiOperation(value = "编辑分类")
+    @PostMapping("/update")
+    public Result updateCategory(@RequestBody Category category) {
+        int result = categoryService.updateCategory(category);
+        if (result > 0) {
+            return Result.success("", "更新成功");
+        }
+        return Result.failed();
+    }
+
+    @ApiOperation(value = "添加新的分类")
+    @PostMapping("/add")
+    public Result addCategory(@RequestBody Category category) {
+        int result = categoryService.addCategory(category);
+        if (result > 0) {
+            return Result.success("", "添加成功");
+        }
+        return Result.failed();
+    }
+
+
 
 
 

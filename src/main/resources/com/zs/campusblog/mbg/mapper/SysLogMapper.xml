@@ -9,13 +9,15 @@
     <result column="class_path" jdbcType="VARCHAR" property="classPath" />
     <result column="operation" jdbcType="VARCHAR" property="operation" />
     <result column="method" jdbcType="VARCHAR" property="method" />
-    <result column="params" jdbcType="VARCHAR" property="params" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
     <result column="os" jdbcType="VARCHAR" property="os" />
     <result column="browser" jdbcType="VARCHAR" property="browser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="spend_time" jdbcType="INTEGER" property="spendTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zs.campusblog.mbg.model.SysLog">
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,9 +78,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, url, type, class_path, operation, method, params, ip, os, browser, 
-    create_time, update_time, spend_time
+    id, username, url, type, class_path, operation, method, ip, os, browser, create_time, 
+    update_time, spend_time
   </sql>
+  <sql id="Blob_Column_List">
+    params
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.zs.campusblog.mbg.model.SysLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.zs.campusblog.mbg.model.SysLogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -93,9 +114,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from sys_log
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -115,13 +138,13 @@
     </selectKey>
     insert into sys_log (username, url, type, 
       class_path, operation, method, 
-      params, ip, os, browser, 
-      create_time, update_time, spend_time
+      ip, os, browser, create_time, 
+      update_time, spend_time, params
       )
     values (#{username,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{classPath,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
-      #{params,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{spendTime,jdbcType=INTEGER}
+      #{ip,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{spendTime,jdbcType=INTEGER}, #{params,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zs.campusblog.mbg.model.SysLog">
@@ -148,9 +171,6 @@
       <if test="method != null">
         method,
       </if>
-      <if test="params != null">
-        params,
-      </if>
       <if test="ip != null">
         ip,
       </if>
@@ -168,6 +188,9 @@
       </if>
       <if test="spendTime != null">
         spend_time,
+      </if>
+      <if test="params != null">
+        params,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -189,9 +212,6 @@
       <if test="method != null">
         #{method,jdbcType=VARCHAR},
       </if>
-      <if test="params != null">
-        #{params,jdbcType=VARCHAR},
-      </if>
       <if test="ip != null">
         #{ip,jdbcType=VARCHAR},
       </if>
@@ -209,6 +229,9 @@
       </if>
       <if test="spendTime != null">
         #{spendTime,jdbcType=INTEGER},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -242,9 +265,6 @@
       <if test="record.method != null">
         method = #{record.method,jdbcType=VARCHAR},
       </if>
-      <if test="record.params != null">
-        params = #{record.params,jdbcType=VARCHAR},
-      </if>
       <if test="record.ip != null">
         ip = #{record.ip,jdbcType=VARCHAR},
       </if>
@@ -263,7 +283,30 @@
       <if test="record.spendTime != null">
         spend_time = #{record.spendTime,jdbcType=INTEGER},
       </if>
+      <if test="record.params != null">
+        params = #{record.params,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sys_log
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      class_path = #{record.classPath,jdbcType=VARCHAR},
+      operation = #{record.operation,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      os = #{record.os,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      spend_time = #{record.spendTime,jdbcType=INTEGER},
+      params = #{record.params,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -277,7 +320,6 @@
       class_path = #{record.classPath,jdbcType=VARCHAR},
       operation = #{record.operation,jdbcType=VARCHAR},
       method = #{record.method,jdbcType=VARCHAR},
-      params = #{record.params,jdbcType=VARCHAR},
       ip = #{record.ip,jdbcType=VARCHAR},
       os = #{record.os,jdbcType=VARCHAR},
       browser = #{record.browser,jdbcType=VARCHAR},
@@ -309,9 +351,6 @@
       <if test="method != null">
         method = #{method,jdbcType=VARCHAR},
       </if>
-      <if test="params != null">
-        params = #{params,jdbcType=VARCHAR},
-      </if>
       <if test="ip != null">
         ip = #{ip,jdbcType=VARCHAR},
       </if>
@@ -330,7 +369,27 @@
       <if test="spendTime != null">
         spend_time = #{spendTime,jdbcType=INTEGER},
       </if>
+      <if test="params != null">
+        params = #{params,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zs.campusblog.mbg.model.SysLog">
+    update sys_log
+    set username = #{username,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      class_path = #{classPath,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      spend_time = #{spendTime,jdbcType=INTEGER},
+      params = #{params,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.campusblog.mbg.model.SysLog">
@@ -341,7 +400,6 @@
       class_path = #{classPath,jdbcType=VARCHAR},
       operation = #{operation,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR},
-      params = #{params,jdbcType=VARCHAR},
       ip = #{ip,jdbcType=VARCHAR},
       os = #{os,jdbcType=VARCHAR},
       browser = #{browser,jdbcType=VARCHAR},

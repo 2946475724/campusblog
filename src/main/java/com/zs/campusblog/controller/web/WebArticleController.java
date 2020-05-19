@@ -8,6 +8,7 @@ import com.zs.campusblog.mbg.model.ArticleCollection;
 import com.zs.campusblog.mbg.model.ArticleLike;
 import com.zs.campusblog.service.ArticleService;
 import com.zs.campusblog.service.LikedService;
+import com.zs.campusblog.service.TagService;
 import com.zs.campusblog.vo.ArticleVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +30,8 @@ public class WebArticleController {
     private ArticleService articleService;
     @Autowired
     LikedService likedService;
+    @Autowired
+    TagService tagService;
 
     @LogAop("添加文章")
     @ApiOperation(value = "添加文章")
@@ -65,6 +68,20 @@ public class WebArticleController {
     public Result addArticleViewCount(@PathVariable Integer id) {
         int result = articleService.addArticleViewCount(id);
         return Result.success("", "文章浏览量+1");
+    }
+
+    @ApiOperation("根据标签id获取文章列表")
+    @GetMapping("/getArticlesByTagId")
+    public Result getArticlesByTagId(@RequestParam(name = "tagId") Integer id) {
+        List<ArticleDTO> articles = articleService.getArticlesByTagId(id);
+        return Result.success(articles);
+    }
+
+    @ApiOperation("获取推荐文章")
+    @GetMapping("/recommended")
+    public Result getArticlesWithLevel(Integer id) {
+        List<ArticleDTO> articles = articleService.getArticlesWithLevel();
+        return Result.success(articles);
     }
 
     @LogAop("根据文章id删除文章")
@@ -104,4 +121,6 @@ public class WebArticleController {
         List<ArticleDTO> list = articleService.getCollectArticleByUserId(userId);
         return Result.success(list);
     }
+
+
 }

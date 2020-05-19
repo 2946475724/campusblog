@@ -36,6 +36,14 @@ public interface UserService {
     String login(String username, String password);
 
     /**
+     * 登录
+     * @param username 用户名
+     * @param password 密码
+     * @return 生成的JWT的token
+     */
+    String WebLogin(String username, String password);
+
+    /**
      * 刷新token的功能
      * @param oldToken 旧的token
      */
@@ -142,4 +150,5 @@ public interface UserService {
      * 获取粉丝数
      */
     Long getFansNum(Integer followingId);
+
 }

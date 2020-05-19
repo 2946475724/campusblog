@@ -30,6 +30,16 @@ public interface ArticleService {
     List<Article> getHotArticle();
 
     /**
+     * 获取推荐文章
+     */
+    List<ArticleDTO> getArticlesWithLevel();
+
+    /**
+     * 修改文章推荐
+     */
+    int updateArticleLevel(Integer id, Integer level);
+
+    /**
      * 根据id获取文章
      */
     ArticleDTO getArticleById(Integer id);
@@ -43,6 +53,11 @@ public interface ArticleService {
      * 根据分类id获取文章列表
      */
     List<ArticleDTO> getArticlesByCategoryId(Integer id);
+
+    /**
+     * 根据标签id获取文章列表
+     */
+    List<ArticleDTO> getArticlesByTagId(Integer id);
 
     /**
      * 批量删除文章

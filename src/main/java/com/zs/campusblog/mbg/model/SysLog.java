@@ -25,9 +25,6 @@ public class SysLog implements Serializable {
     @ApiModelProperty(value = "请求方法")
     private String method;
 
-    @ApiModelProperty(value = "请求参数")
-    private String params;
-
     @ApiModelProperty(value = "IP地址")
     private String ip;
 
@@ -45,6 +42,9 @@ public class SysLog implements Serializable {
 
     @ApiModelProperty(value = "方法请求花费的时间")
     private Integer spendTime;
+
+    @ApiModelProperty(value = "请求参数")
+    private String params;
 
     private static final long serialVersionUID = 1L;
 
@@ -104,14 +104,6 @@ public class SysLog implements Serializable {
         this.method = method;
     }
 
-    public String getParams() {
-        return params;
-    }
-
-    public void setParams(String params) {
-        this.params = params;
-    }
-
     public String getIp() {
         return ip;
     }
@@ -160,6 +152,14 @@ public class SysLog implements Serializable {
         this.spendTime = spendTime;
     }
 
+    public String getParams() {
+        return params;
+    }
+
+    public void setParams(String params) {
+        this.params = params;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -173,13 +173,13 @@ public class SysLog implements Serializable {
         sb.append(", classPath=").append(classPath);
         sb.append(", operation=").append(operation);
         sb.append(", method=").append(method);
-        sb.append(", params=").append(params);
         sb.append(", ip=").append(ip);
         sb.append(", os=").append(os);
         sb.append(", browser=").append(browser);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", spendTime=").append(spendTime);
+        sb.append(", params=").append(params);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

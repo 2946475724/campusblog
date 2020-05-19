@@ -60,13 +60,20 @@
             t.id = #{id}
     </select>
 
-    <select id="getTagList" parameterType="string" resultType="com.zs.campusblog.mbg.model.Tag">
-        select * from tag
-        <where>
+    <select id="getTagList" parameterType="string" resultType="com.zs.campusblog.dto.TagDTO">
+        SELECT
+            t.*,
+        count( t.id ) AS articleCount
+        FROM
+            tag t
+        LEFT JOIN article_tag AT ON t.id = AT.tag_id
+        <where> t.STATUS = 0 and
             <if test="keyword != null || keyword != ''">
                 name like CONCAT('%',#{keyword},'%')
             </if>
         </where>
+        GROUP BY
+            t.id
 
     </select>
 
